@@ -51,6 +51,23 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
 
 
     @Override
+    public Goods findOne(Long id) {
+        //根据商品id 查出所有数据返回给页面展示
+        //创建组合对象往里面封装查出来的数据
+        Goods goods = new Goods();
+        TbGoods tbGoods = goodsMapper.selectByPrimaryKey(id);
+        TbGoodsDesc tbGoodsDesc = goodsDescMapper.selectByPrimaryKey(id);
+        TbItem tbItem = new TbItem();
+        tbItem.setGoodsId(id);
+        List<TbItem> tbItemList = itemMapper.select(tbItem);
+        goods.setGoods(tbGoods);
+        goods.setGoodsDesc(tbGoodsDesc);
+        goods.setItemList(tbItemList);
+
+        return goods;
+    }
+
+    @Override
     public void add(Goods goods) {
         //1获取goods
         TbGoods tbGoods = goods.getGoods();
@@ -196,7 +213,7 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
 
         if (goods != null) {
             if (StringUtils.isNotBlank(goods.getSellerId())) {
-                criteria.andLike("sellerId", "%" + goods.getSellerId() + "%");
+                criteria.andEqualTo("sellerId",  goods.getSellerId() );
                 //criteria.andSellerIdLike("%"+goods.getSellerId()+"%");
             }
             if (StringUtils.isNotBlank(goods.getGoodsName())) {

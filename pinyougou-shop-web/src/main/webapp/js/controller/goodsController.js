@@ -18,7 +18,8 @@
         brandTextList: [],
         image_entity: {url: '', color: ''},
         customA: [],
-        specList: [],//模板关联的规格选项集合
+        specList: [] //模板关联的规格选项集合
+
 
     },
     methods: {
@@ -281,6 +282,17 @@
         //第一个参数是新值 就是现在当前选中的值
         //第二个参数是旧值,就是上一次选中时的值
         'entity.goods.category1Id': function (newval, oldval) {
+            //赋值为空
+            this.itemCat3List = [];
+            //删除属性回到原始状态
+            if (this.entity.goods.id == null) {
+                delete this.entity.goods.category2Id;
+
+                delete this.entity.goods.category3Id;
+
+                delete this.entity.goods.typeTemplateId;
+
+            }
             //进行一个判断 因为有可能还没有新值.
             if (newval != undefined) {
                 //根据新选中值的id发送一个请求查询它下面所有的子级分类
@@ -294,6 +306,11 @@
         },
         //监听二级分类
         'entity.goods.category2Id': function (newval, oldval) {
+            //删除
+            if (this.entity.goods.id == null) {
+                delete this.entity.goods.category3Id;
+                delete this.entity.goods.typeTemplateId;
+            }
             // 进行非空判断
             if (newval != undefined) {
                 axios.get('/itemCat/findByParentId/' + newval + '.shtml').then(function (response) {
@@ -337,6 +354,28 @@
                 })
 
             }
+        },
+        //监控变量的变化，如果是已经
+        'entity.goods.isEnableSpec': function (newVal, oldVal) {
+            //如果是隐藏规格列表 则清除所有数据，展开是再进行选择。
+            if (newVal == 0) {
+                this.entity.goodsDesc.specificationItems = [];
+                this.entity.itemList = [];
+            }
+        },
+        //监控数据变化 ，如果最后还剩下一个就直接删除
+        'entity.itemList': function (newval, oldval) {
+            //如果是相同的数据那么直接赋值为空即可
+            console.log(JSON.stringify([{
+                spec: {},
+                price: 0,
+                num: 0,
+                status: '0',
+                isDefault: '0'
+            }]) == JSON.stringify(newval));
+            if (JSON.stringify([{spec: {}, price: 0, num: 0, status: '0', isDefault: '0'}]) == JSON.stringify(newval)) {
+                this.entity.itemList = [];
+            }
         }
 
 
@@ -348,6 +387,11 @@
     created: function () {
 
         this.findCat1List();
+
+        //获取url中的值
+        var obj = this.getUrlParam();
+
+        this.findOne(obj.id)
 
     }
 

@@ -14,7 +14,12 @@ import entity.Goods;
  * @author Administrator
  */
 public interface GoodsService extends CoreService<TbGoods> {
-
+    /**
+     * 根据ID获取实体
+     * @param id
+     * @return
+     */
+    Goods findOne(Long id);
 
     void add(Goods goods);
 

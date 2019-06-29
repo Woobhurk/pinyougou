@@ -1,6 +1,7 @@
 package com.pinyougou.manager.controller;
 import java.util.List;
 
+import entity.Goods;
 import org.springframework.web.bind.annotation.*;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.pinyougou.pojo.TbGoods;
@@ -75,7 +76,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/findOne/{id}")
-	public TbGoods findOne(@PathVariable(value = "id") Long id){
+	public Goods findOne(@PathVariable(value = "id") Long id){
 		return goodsService.findOne(id);		
 	}
 	
