@@ -84,17 +84,21 @@
             });
         },
         update: function () {
+            //通过kindEditer的方法 获取html代码 赋值给变量中 商品描述的属性
+            this.entity.goodsDesc.introduction = editor.html();
             axios.post('/goods/update.shtml', this.entity).then(function (response) {
                 console.log(response);
+                alert(entity.goodsDesc.introduction)
                 if (response.data.success) {
-                    app.searchList(1);
+
+                    window.location.href="goods.html";
                 }
             }).catch(function (error) {
                 console.log("1231312131321");
             });
         },
         save: function () {
-            if (this.entity.id != null) {
+            if (this.entity.goods.id!=null) {
                 this.update();
             } else {
                 this.add();
@@ -103,6 +107,22 @@
         findOne: function (id) {
             axios.get('/goods/findOne/' + id + '.shtml').then(function (response) {
                 app.entity = response.data;
+                //富文本编辑器赋值
+                editor.html(response.data.goodsDesc.introduction);
+                //转json
+                app.entity.goodsDesc.itemImages = JSON.parse(app.entity.goodsDesc.itemImages);
+                app.entity.goodsDesc.customAttributeItems = JSON.parse(app.entity.goodsDesc.customAttributeItems);
+                app.entity.goodsDesc.specificationItems = JSON.parse(app.entity.goodsDesc.specificationItems);
+                //SUK 列表
+                var itemList = app.entity.itemList;
+                for (var i = 0; i < itemList.length; i++) {
+                    //取出itemList的
+                    let item = app.entity.itemList[i];
+                    //spec转JSON对象
+                    item.spec= JSON.parse(item.spec)
+                }
+
+
             }).catch(function (error) {
                 console.log("1231312131321");
             });
@@ -272,7 +292,24 @@
                 }
             }
             return newList;
-        }
+        },
+        //判断规格勾选状态
+        isChecked: function (specName, specValue) {
+            //判断循环到的值 是否在变量中存在 如果存在才勾选 否则就不勾选
+            //从specificationItems中 找到 attributeName 属性名  根据属性名 找到选项对象(传入需要判断的对象)
+            var specificationItems = this.entity.goodsDesc.specificationItems;
+            var obj = this.searchObjectByKey(specificationItems, 'attributeName', specName);
+
+            //如果整个选项都不存在,直接返回false
+            if (obj == null) {
+                return false;
+            }
+                //判断方法如果找到了 就让页面勾选
+                if (obj.attributeValue.indexOf(specValue) != -1) {
+                    return true;
+                }
+        },
+
 
 
     },
@@ -343,7 +380,9 @@
                     //因为数据取出来是一个json的字符串 需要转换成json对象页面才能遍历
                     app.brandTextList = JSON.parse(typeTemplate.brandIds);//传回来的数据格式 是 "id":1,"text":"联想"
                     //获取模板对象中扩展属性的值,定义一个变量接收
-                    app.entity.goodsDesc.customAttributeItems = JSON.parse(typeTemplate.customAttributeItems);
+                    if (app.entity.goods.id == null) {
+                        app.entity.goodsDesc.customAttributeItems = JSON.parse(typeTemplate.customAttributeItems);
+                    }
                 })
 
                 //监听模板的变化 根据模板的id 获取模板规格的数据拼接成想要的格式
@@ -391,7 +430,7 @@
         //获取url中的值
         var obj = this.getUrlParam();
 
-        this.findOne(obj.id)
+        this.findOne(obj.id);
 
     }
 

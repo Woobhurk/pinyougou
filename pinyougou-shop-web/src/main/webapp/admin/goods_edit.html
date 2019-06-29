@@ -130,7 +130,7 @@
 		                           
 		                           <div class="col-md-2 title editer">商品介绍</div>
                                    <div class="col-md-10 data editer">
-                                       <textarea name="content" style="width:800px;height:400px;visibility:hidden;" ></textarea>
+                                       <textarea name="content"  v-model="entity.goodsDesc.introduction" style="width:800px;height:400px;visibility:hidden;" ></textarea>
                                    </div>
 		                           
 		                           <div class="col-md-2 title rowHeight2x">包装列表</div>
@@ -214,14 +214,14 @@
                             	<p>
                             	<!--判断勾选状态展示页面-->
                             	<div v-if="entity.goods.isEnableSpec=='1'">
-	                                <div class="row data-type">
+	                                <div class="row data-type" v-for="spec in specList">
 	                                		<!--遍历集合取出里面的规格-->
-		                                <div v-for="spec in specList">
+		                                <div>
 			                                <div class="col-md-2 title">{{spec.text}}</div>
 					                        <div class="col-md-10 data">
 					                               <!--取出其中的规格选项-->
 					                            <span v-for="option in spec.options">
-					                            	<input  type="checkbox" @click="updateChecked($event,spec.text,option.optionName);createList()">{{option.optionName}}
+					                            	<input  type="checkbox" :checked="isChecked(spec.text,option.optionName)" @click="updateChecked($event,spec.text,option.optionName);createList()">{{option.optionName}}
 					                            </span>
 					                        </div>
 		                                </div>
@@ -281,7 +281,7 @@
                  	
                    </div>
                   <div class="btn-toolbar list-toolbar">
-				      <button class="btn btn-primary" @click="add()"><i class="fa fa-save"></i>保存</button>
+				      <button class="btn btn-primary" @click="save()"><i class="fa fa-save"></i>保存</button>
 				      <button class="btn btn-default" @click="goListPage()">返回列表</button>
 				  </div>
 
@@ -360,7 +360,7 @@
 			
 		</div>
 		<div class="modal-footer">						
-			<button class="btn btn-success"   @click="add()" data-dismiss="modal" aria-hidden="true">保存</button>
+			<button class="btn btn-success"   @click="save()" data-dismiss="modal" aria-hidden="true">保存</button>
 			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
 		</div>
 	  </div>

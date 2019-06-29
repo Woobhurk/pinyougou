@@ -50,6 +50,32 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
     }
 
 
+    /**
+     *  更新
+     * @param goods
+     * @return
+     */
+    @Override
+    public void update(Goods goods) {
+        TbGoods tbGoods = goods.getGoods();
+        goodsMapper.updateByPrimaryKey(tbGoods);
+        TbGoodsDesc tbGoodsDesc = goods.getGoodsDesc();
+        goodsDescMapper.updateByPrimaryKey(tbGoodsDesc);
+        //sku表需要先删除 在添加  如果直接更新会造成脏数据的问题
+        //Example example = new Example(TbItem.class);
+        //Example.Criteria criteria = example.createCriteria();
+        //criteria.andEqualTo("goodId",tbGoods.getId());
+        //itemMapper.deleteByExample(criteria);
+        TbItem tbItem = new TbItem();
+        tbItem.setGoodsId(tbGoods.getId());
+        itemMapper.delete(tbItem);
+        //新增
+        List<TbItem> itemList = goods.getItemList();
+        saveItems(goods, tbGoods, tbGoodsDesc);
+
+
+    }
+
     @Override
     public Goods findOne(Long id) {
         //根据商品id 查出所有数据返回给页面展示
@@ -83,6 +109,12 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
         goodsDesc.setGoodsId(tbGoods.getId());
         goodsDescMapper.insert(goodsDesc);
 
+        saveItems(goods, tbGoods, goodsDesc);
+
+
+    }
+
+    private void saveItems(Goods goods, TbGoods tbGoods, TbGoodsDesc goodsDesc) {
         //如果启用规则就正常添加
         if ("1".equals(tbGoods.getIsEnableSpec())){
             //3获取 skuList
@@ -187,8 +219,6 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
 
             itemMapper.insert(tbItem);
         }
-
-
     }
 
     @Override
@@ -245,10 +275,10 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
         List<TbGoods> all = goodsMapper.selectByExample(example);
         PageInfo<TbGoods> info = new PageInfo<TbGoods>(all);
         //序列化再反序列化
-        String s = JSON.toJSONString(info);
-        PageInfo<TbGoods> pageInfo = JSON.parseObject(s, PageInfo.class);
+       /* String s = JSON.toJSONString(info);
+        PageInfo<TbGoods> pageInfo = JSON.parseObject(s, PageInfo.class);*/
 
-        return pageInfo;
+        return info;
     }
 
 }

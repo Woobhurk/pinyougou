@@ -8,7 +8,7 @@
         ids:[],
         status:['未审核','已审核','审核未通过','已关闭'],
         searchEntity:{},
-        itemCatList:[]
+        itemCatList:[],
     },
     methods: {
         searchList:function (curPage) {
@@ -94,27 +94,27 @@
                 console.log("1231312131321");
             });
         },
-        findAllItemCategory:function () {
+         findAllItemCategory:function () {
             //获取所有的商品分类列表
             axios.get('/itemCat/findAll.shtml').then(function (response) {
                 for(var i=0;i<response.data.length;i++){
                     app.itemCatList[response.data[i].id]=response.data[i].name;
                 }
+
+                app.searchList(1);
+
             }).catch(function (error) {
                 console.log("1231312131321");
             });
         }
 
 
+
+
     },
     //钩子函数 初始化了事件和
     created: function () {
-
-        this.searchList(1);
-
         this.findAllItemCategory();
-
-
     }
 
 })

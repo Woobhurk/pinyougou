@@ -67,7 +67,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody TbGoods goods){
+	public Result update(@RequestBody  Goods goods){
 		try {
 			goodsService.update(goods);
 			return new Result(true, "修改成功");
@@ -112,6 +112,10 @@ public class GoodsController {
 		//增加搜索条件
 		goods.setSellerId(SecurityContextHolder.getContext().getAuthentication().getName());
         return goodsService.findPage(pageNo, pageSize, goods);
+
     }
-	
+
+
+
+
 }
