@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -241,9 +242,11 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
         Example example = new Example(TbGoods.class);
         Example.Criteria criteria = example.createCriteria();
 
+        criteria.andEqualTo("isDelete",false);//只查询没有被删除的
+
         if (goods != null) {
             if (StringUtils.isNotBlank(goods.getSellerId())) {
-                criteria.andEqualTo("sellerId",  goods.getSellerId() );
+                criteria.andEqualTo("sellerId",  "%" +goods.getSellerId()+ "%" );
                 //criteria.andSellerIdLike("%"+goods.getSellerId()+"%");
             }
             if (StringUtils.isNotBlank(goods.getGoodsName())) {
@@ -275,10 +278,52 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
         List<TbGoods> all = goodsMapper.selectByExample(example);
         PageInfo<TbGoods> info = new PageInfo<TbGoods>(all);
         //序列化再反序列化
-       /* String s = JSON.toJSONString(info);
-        PageInfo<TbGoods> pageInfo = JSON.parseObject(s, PageInfo.class);*/
+        String s = JSON.toJSONString(info);
+        PageInfo<TbGoods> pageInfo = JSON.parseObject(s, PageInfo.class);
 
         return info;
     }
 
+
+    /**
+     * 修改审核状态
+     * @param ids
+     * @param status
+     */
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        //创建一个goods对象把状态传入当做需要更新的值
+        TbGoods tbGoods = new TbGoods();
+        tbGoods.setAuditStatus(status);
+        //创建查询条件
+        Example example = new Example(TbGoods.class);
+        Example.Criteria criteria = example.createCriteria();
+        //根据id更改 有可能多选 所以把数组转为集合
+        criteria.andIn("id", Arrays.asList(ids));
+        //传入更新的值 和 更改的id
+        // update set status=1 where id in (12,3,...)
+        goodsMapper.updateByExampleSelective(tbGoods, example);
+
+
+    }
+
+
+    @Override
+    public void delete(Object[] ids) {
+        //update tb_goods set is_delete=1 where id in (1,2,3)
+        Example example = new Example(TbGoods.class);
+        //创建一个容器 克隆ids成一个集合
+        Long[] issss = new Long[ids.length];
+        for (int i = 0; i < ids.length; i++) {
+            issss[i] = (Long) ids[i];
+        }
+        example.createCriteria().andIn("id", Arrays.asList(issss));
+
+        TbGoods tbGoods = new TbGoods();
+        tbGoods.setIsDelete(true);
+        goodsMapper.updateByExampleSelective(tbGoods, example);
+
+
+
+    }
 }

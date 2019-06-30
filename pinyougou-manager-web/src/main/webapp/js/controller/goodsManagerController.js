@@ -7,7 +7,7 @@
         entity:{},
         ids:[],
         status:['未审核','已审核','审核未通过','已关闭'],
-        searchEntity:{auditStatus:'',goodsName:''},
+        searchEntity:{auditStatus:'0'},
         itemCatList:[],
     },
     methods: {
@@ -100,8 +100,18 @@
                     app.itemCatList[response.data[i].id]=response.data[i].name;
                 }
 
-              app.searchList(1);
+               app.searchList(1);
 
+            }).catch(function (error) {
+
+                console.log("1231312131321");
+            });
+        } ,
+         updateStatus:function (status) {
+            axios.post('/goods/updateStatus/'+status+'.shtml',this.ids).then(function (response) {
+                if(response.data.success){
+                    app.findAllItemCategory();
+                }
             }).catch(function (error) {
                 console.log("1231312131321");
             });
@@ -112,8 +122,8 @@
     },
     //钩子函数 初始化了事件和
     created: function () {
-         this.searchList(1);
-       this.findAllItemCategory();
+      this.searchList(1);
+      this.findAllItemCategory();
     }
 
 })

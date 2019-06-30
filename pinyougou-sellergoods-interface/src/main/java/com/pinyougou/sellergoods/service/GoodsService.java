@@ -1,7 +1,5 @@
 package com.pinyougou.sellergoods.service;
 
-import java.util.List;
-
 import com.pinyougou.pojo.TbGoods;
 
 import com.github.pagehelper.PageInfo;
@@ -14,6 +12,8 @@ import entity.Goods;
  * @author Administrator
  */
 public interface GoodsService extends CoreService<TbGoods> {
+
+
 
     /**
      * 更新
@@ -48,4 +48,10 @@ public interface GoodsService extends CoreService<TbGoods> {
      */
     PageInfo<TbGoods> findPage(Integer pageNo, Integer pageSize, TbGoods Goods);
 
+    /**
+     * 修改审核状态
+     * @param ids
+     * @param status
+     */
+    void updateStatus(Long[] ids, String status);
 }
