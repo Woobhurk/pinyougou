@@ -59,6 +59,8 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
     @Override
     public void update(Goods goods) {
         TbGoods tbGoods = goods.getGoods();
+        //商家修改就要进行审核才能发布所以每次修改都要进行状态重置
+        tbGoods.setAuditStatus("0");
         goodsMapper.updateByPrimaryKey(tbGoods);
         TbGoodsDesc tbGoodsDesc = goods.getGoodsDesc();
         goodsDescMapper.updateByPrimaryKey(tbGoodsDesc);

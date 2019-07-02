@@ -66,16 +66,16 @@
 		                           	  			<td>
 													<!--一级分类-->
 													<!--绑定model 把选中的值封装到entity里-->
-		                           	  				<select class="form-control" v-model="entity.goods.category1Id">
+		                           	  				<select class="form-control" v-model="entity.goods.category1Id" disabled="true">
 														<!--这个value的目的是 保存的时候 把值取出来 赋值给entity.Goods.category1Id 这个变量 然后存入数据库-->
-														<option  :value="itemCat.id" v-for="itemCat in itemCat1List">
+														<option  :value="itemCat.id" v-for="itemCat in itemCat1List" >
 															{{itemCat.name}}
 														</option>
 		                           	  				</select>
 		                              			</td>
 		                              			<td>
 													<!--二级分类-->
-		                           	  				<select class="form-control select-sm" v-model="entity.goods.category2Id">
+		                           	  				<select class="form-control select-sm" v-model="entity.goods.category2Id" disabled="true">
 														<option :value="itemCat.id" v-for="itemCat in itemCat2List">
 															{{itemCat.name}}
 														</option>
@@ -83,7 +83,7 @@
 		                              			</td>
 		                              			<td>
 													<!--三级分类-->
-													<select class="form-control select-sm" v-model="entity.goods.category3Id">
+													<select class="form-control select-sm" v-model="entity.goods.category3Id" disabled="true">
 														<option :value="itemCat.id" v-for="itemCat in itemCat3List">
 															{{itemCat.name}}
 														</option>
@@ -99,50 +99,50 @@
 		                          	  
 									
 		                           <div class="col-md-2 title">商品名称</div>
-		                           <div class="col-md-10 data">
-									   {{entity.goods.goodsName}}
-		                               <input type="text" class="form-control" v-model="entity.goods.goodsName"   placeholder="商品名称" value="">
+		                           <div class="col-md-10 data" >
+
+		                               <input type="text" class="form-control" v-model="entity.goods.goodsName"   placeholder="商品名称" value="" disabled="true">
 		                           </div>
 		                           
 		                           <div class="col-md-2 title">品牌</div>
 		                           <div class="col-md-10 data">
-		                              <select class="form-control" v-model="entity.goods.brandId">
+		                              <select class="form-control" v-model="entity.goods.brandId" disabled="true">
 										  <option :value="brand.id" v-for="brand in brandTextList">
-											  {{brand.text}}
+
 										  </option>
 									  </select>
 		                           </div>
 		
 								   <div class="col-md-2 title">副标题</div>
 		                           <div class="col-md-10 data">
-									   {{entity.goods.caption}}
-		                               <input type="text" class="form-control" v-model="entity.goods.caption"  placeholder="副标题" value="">
+
+		                               <input type="text" class="form-control" v-model="entity.goods.caption"  placeholder="副标题" value="" disabled="true">
 		                           </div>
 		                           
 		                           <div class="col-md-2 title">价格</div>
 		                           <div class="col-md-10 data">
 		                           	   <div class="input-group">
-										   {{entity.goods.price}}
+
 			                          	   <span class="input-group-addon">¥</span>
-			                               <input type="text" class="form-control" v-model="entity.goods.price" placeholder="价格" value="">
+			                               <input type="text" class="form-control" v-model="entity.goods.price" placeholder="价格" value="" disabled="true">
 		                           	   </div>
 		                           </div>
 		                           
 		                           <div class="col-md-2 title editer">商品介绍</div>
                                    <div class="col-md-10 data editer">
-                                       <textarea name="content"  v-model="entity.goodsDesc.introduction" style="width:800px;height:400px;visibility:hidden;" ></textarea>
+                                       <textarea name="content"  v-model="entity.goodsDesc.introduction" style="width:800px;height:400px;visibility:hidden;"  ></textarea>
                                    </div>
 		                           
 		                           <div class="col-md-2 title rowHeight2x">包装列表</div>
 		                           <div class="col-md-10 data rowHeight2x">
-		                               {{entity.goodsDesc.packageList}}
-		                           	<textarea rows="4"  class="form-control" v-model="entity.goodsDesc.packageList"   placeholder="包装列表"></textarea>
+
+		                           	<textarea rows="4"  class="form-control" v-model="entity.goodsDesc.packageList"   placeholder="包装列表" disabled="true"></textarea>
 		                           </div>
 		                           
 		                           <div class="col-md-2 title rowHeight2x">售后服务</div>
 		                           <div class="col-md-10 data rowHeight2x">
-									   {{entity.goodsDesc.saleService}}
-		                               <textarea rows="4"  class="form-control" v-model="entity.goodsDesc.saleService"   placeholder="售后服务"></textarea>
+
+		                               <textarea rows="4"  class="form-control" v-model="entity.goodsDesc.saleService"   placeholder="售后服务" disabled="true"></textarea>
 		                           </div>                        
                                   
                                     

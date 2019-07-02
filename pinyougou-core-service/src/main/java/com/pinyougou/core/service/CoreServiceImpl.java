@@ -10,6 +10,7 @@ import java.util.List;
 public abstract class CoreServiceImpl<T> implements CoreService<T> {
 
 
+
     //定义一个父的Mapper
     protected Mapper<T> baseMapper;
     //定义一个要操作的pojo 对应的class
@@ -32,6 +33,7 @@ public abstract class CoreServiceImpl<T> implements CoreService<T> {
 
     @Override
     public void delete(Object[] ids) {
+
         Example example = new Example(clazz);
         Example.Criteria criteria = example.createCriteria();
 

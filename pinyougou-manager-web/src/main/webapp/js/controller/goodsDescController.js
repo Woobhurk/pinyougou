@@ -63,6 +63,7 @@
                 console.log(response);
                 if(response.data.success){
                     app.searchList(1);
+                    alert("状态更新成功")
                 }
             }).catch(function (error) {
                 console.log("1231312131321");
