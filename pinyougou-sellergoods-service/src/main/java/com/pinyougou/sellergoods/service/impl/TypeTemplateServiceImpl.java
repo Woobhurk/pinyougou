@@ -1,27 +1,22 @@
 package com.pinyougou.sellergoods.service.impl;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.alibaba.fastjson.JSONArray;
-import com.pinyougou.mapper.TbSpecificationOptionMapper;
-import com.pinyougou.pojo.TbSpecificationOption;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang3.StringUtils;
 import com.pinyougou.core.service.CoreServiceImpl;
-
+import com.pinyougou.mapper.TbSpecificationOptionMapper;
+import com.pinyougou.mapper.TbTypeTemplateMapper;
+import com.pinyougou.pojo.TbSpecificationOption;
+import com.pinyougou.pojo.TbTypeTemplate;
+import com.pinyougou.sellergoods.service.TypeTemplateService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import tk.mybatis.mapper.entity.Example;
 
-import com.pinyougou.mapper.TbTypeTemplateMapper;
-import com.pinyougou.pojo.TbTypeTemplate;
-
-import com.pinyougou.sellergoods.service.TypeTemplateService;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -32,6 +27,8 @@ import com.pinyougou.sellergoods.service.TypeTemplateService;
 @Service
 public class TypeTemplateServiceImpl extends CoreServiceImpl<TbTypeTemplate> implements TypeTemplateService {
 
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     private TbTypeTemplateMapper typeTemplateMapper;
 
@@ -90,6 +87,24 @@ public class TypeTemplateServiceImpl extends CoreServiceImpl<TbTypeTemplate> imp
         //序列化再反序列化
         String s = JSON.toJSONString(info);
         PageInfo<TbTypeTemplate> pageInfo = JSON.parseObject(s, PageInfo.class);
+
+        //获取模板数据
+        List<TbTypeTemplate> tbTypeTemplateList = this.findAll();
+        //循环模板
+        for (TbTypeTemplate tbTypeTemplate : tbTypeTemplateList) {
+            //查出来是字符串所以要转为json对象,要不然页面无法展示
+            List<Map> brandList = JSON.parseArray(tbTypeTemplate.getBrandIds(), Map.class);
+            //存储品牌列表
+            redisTemplate.boundHashOps("brandList").put(tbTypeTemplate.getId(), brandList);
+            //规格列表  大key不一样 里面的id可以重复 因为页面展示规格还需要找到所有的规格选项,
+            //页面需要的数据需要组装拼接,不能直接查询给值
+            // 之前写过规格和规格选项的方法可以直接调用返回
+            List<Map> specList = findSpecList(tbTypeTemplate.getId());
+            redisTemplate.boundHashOps("specList").put(tbTypeTemplate.getId(),specList );
+
+
+        }
+
 
         return pageInfo;
     }

@@ -11,10 +11,11 @@ import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.sellergoods.service.ItemCatService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
-
+import java.util.concurrent.ForkJoinPool;
 
 
 /**
@@ -25,6 +26,8 @@ import java.util.List;
 @Service
 public class ItemCatServiceImpl extends CoreServiceImpl<TbItemCat>  implements ItemCatService {
 
+    @Autowired
+    private RedisTemplate redisTemplate;
 	
 	private TbItemCatMapper itemCatMapper;
 
@@ -41,6 +44,13 @@ public class ItemCatServiceImpl extends CoreServiceImpl<TbItemCat>  implements I
         cat.setParentId(parentId);
         //根据条件查询
         List<TbItemCat> tbItemCats = itemCatMapper.select(cat);
+        //每次执行查询的时候,一次性读取缓存进行储存(因为每次增删改都要执行此方法)
+        //数据量不大所有可以把所有的都存入redis
+        List<TbItemCat> list = findAll();
+        for (TbItemCat itemCat : list) {
+            redisTemplate.boundHashOps("itemCat").put(itemCat.getName(), itemCat.getTypeId());
+
+        }
 
         return tbItemCats;
     }
