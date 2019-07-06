@@ -3,6 +3,8 @@ package com.pinyougou.manager.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.github.pagehelper.PageInfo;
 import com.pinyougou.pojo.TbGoods;
+import com.pinyougou.pojo.TbItem;
+import com.pinyougou.search.service.ItemSearchService;
 import com.pinyougou.sellergoods.service.GoodsService;
 import entity.Goods;
 import entity.Result;
@@ -23,6 +25,10 @@ public class GoodsController {
 
 	@Reference
 	private GoodsService goodsService;
+
+	//引入搜索依赖
+	@Reference
+	private ItemSearchService itemSearchService;
 	
 	/**
 	 * 返回全部列表
@@ -95,6 +101,8 @@ public class GoodsController {
 	public Result delete(@RequestBody Long[] ids){
 		try {
 			goodsService.delete(ids);
+			//调用搜索服务 执行 删除ES数据
+			itemSearchService.deleteByIds(ids);
 			return new Result(true, "删除成功"); 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,6 +127,21 @@ public class GoodsController {
 
 		try {
 			goodsService.updateStatus(ids,status);
+			//调用搜索服务的方法 实现同步 更新
+			//把更新的数据查出来  然后把更新的数据存入es中
+			//重点就是要看审核的到底是哪个表
+			if (status.equals("1")){
+				//审核通过
+				//1.根据审核的SPU的ID获取SKU的列表数据 因为ES的数据就是sku的数据
+				List<TbItem> tbItemList = goodsService.findTbItemListByIds(ids);
+
+				//2.调用搜索服务的方法(传递SKU的列表数据过去) 内部执行更新的动作
+				itemSearchService.updateIndex(tbItemList);
+
+
+
+
+			}
 
 			return new Result(true, "更新成功");
 		} catch (Exception e) {

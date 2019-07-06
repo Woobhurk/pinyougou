@@ -4,7 +4,10 @@ import com.pinyougou.pojo.TbGoods;
 
 import com.github.pagehelper.PageInfo;
 import com.pinyougou.core.service.CoreService;
+import com.pinyougou.pojo.TbItem;
 import entity.Goods;
+
+import java.util.List;
 
 /**
  * 服务层接口
@@ -13,6 +16,12 @@ import entity.Goods;
  */
 public interface GoodsService extends CoreService<TbGoods> {
 
+    /**
+     *  根据商品的SPU的数组对象查询该数组下所有的该商品的列表数据
+     * @param ids
+     * @return
+     */
+    List<TbItem> findTbItemListByIds(Long[] ids);
 
 
     /**

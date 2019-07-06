@@ -2,6 +2,7 @@ package com.pinyougou.search.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
+import com.pinyougou.es.dao.ItemDao;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.search.service.ItemSearchService;
 import org.apache.commons.lang3.StringUtils;
@@ -17,11 +18,14 @@ import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.SearchResultMapper;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
+import org.springframework.data.elasticsearch.core.query.DeleteQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -34,6 +38,12 @@ import java.util.Map;
 @Service
 public class ItemSearchServiceImpl implements ItemSearchService {
 
+
+    @Autowired
+    private ItemDao itemDao;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
@@ -96,7 +106,6 @@ public class ItemSearchServiceImpl implements ItemSearchService {
                     //通过点击的规格选项 从索引库里面的specMap+传入的点击的规格字段对比 过滤掉不包含的数据
                     // 传入key 和  值                                           spec.网络.keyword            移动4G
                     boolQueryBuilder.filter(QueryBuilders.termQuery("specMap." + key + ".keyword", spec.get(key)));
-
                 }
             }
             //3.5过滤查询 价格区间过滤
@@ -112,14 +121,50 @@ public class ItemSearchServiceImpl implements ItemSearchService {
                     boolQueryBuilder.filter(QueryBuilders.rangeQuery("price").from(split[0],true).to(split[1],true));
                 }
             }
-
-
             nativeSearchQueryBuilder.withFilter(boolQueryBuilder);
+
         } else {
             nativeSearchQueryBuilder.withQuery(QueryBuilders.matchAllQuery());
         }
         //4.构建查询对象
         NativeSearchQuery searchQuery = nativeSearchQueryBuilder.build();
+
+        //4.1设置分页
+        //要根据页面传入的当前页码和每页展示行数实时变化
+        Integer pageNo = (Integer) searchMap.get("pageNo");
+        Integer pageSize = (Integer) searchMap.get("pageSize");
+        //页面如果不传值 会报错 设置一个默认值
+        if (pageNo==null){
+            pageNo=1;
+        }
+        if (pageSize==null){
+            pageSize=40;
+        }
+         //第一个参数为 当前页码 如果为0表示第一页
+        //第二个参数为每页显示的行
+        PageRequest pageable = PageRequest.of(pageNo-1,pageSize );
+        searchQuery.setPageable(pageable);
+
+        //4.2根据页面点击的升序或降序排序
+        //排序的类型
+        String sortType = (String) searchMap.get("sortType");
+        //排序的字段
+        String sortField = (String) searchMap.get("sortField");
+        //非空判断
+        if (StringUtils.isNoneBlank(sortType)&&StringUtils.isNoneBlank(sortField)){
+            //判断前端传递的值升序还是降序
+            if ("ASC".equals(sortType)) {
+                //此处使用springData的包
+                Sort sort = new Sort(Sort.Direction.ASC, sortField);
+                searchQuery.addSort(sort);
+            }else if ("DESC".equals(sortType)){
+                Sort sort = new Sort(Sort.Direction.DESC, sortField);
+                searchQuery.addSort(sort);
+            }else {
+                System.out.println("不排序好吧");
+            }
+        }
+
 
         //5.执行查询
         AggregatedPage<TbItem> tbItems = elasticsearchTemplate.queryForPage(searchQuery, TbItem.class, new SearchResultMapper() {
@@ -212,8 +257,41 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         return resultMap;
     }
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+
+
+    @Override
+    public void updateIndex(List<TbItem> tbItemList) {
+        //tbItemList 里面的specMap数据库是没有值的这个是实体类自定义需要封装
+        //将规格的数据保存到map中 如果不设置会为空
+        for (TbItem tbItem : tbItemList) {
+            String spec = tbItem.getSpec();
+            if(StringUtils.isNotBlank(spec)){
+                //把字符串 转成json对象 存入map
+                Map<String,String> map = JSON.parseObject(spec, Map.class);
+                tbItem.setSpecMap(map);
+            }
+        }
+        //直接使用接口里的导入所有的方法
+        //把接口交给容器管理,让spring容器产生实现类
+        //  配置文件里面开启扫描
+        itemDao.saveAll(tbItemList);
+
+    }
+
+
+    @Override
+    public void deleteByIds(Long[] ids) {
+        //先查询把查询后的结果删除
+        //ids里面是goods_ids的值
+        //delete from tb_item where goods_id in (1,2) 从 ES 删除
+
+        //这个是根据条件查出 然后把查出的结果删除
+        DeleteQuery query = new DeleteQuery();
+        query.setQuery(QueryBuilders.termsQuery("goodsId", ids));
+        elasticsearchTemplate.delete(query, TbItem.class);
+    }
+
+
     /**
      *  根据分类的名称 获取 分类下的品牌的列表 和规格的列表
      * @param category

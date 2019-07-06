@@ -32,7 +32,7 @@ public class ManagerSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //自动添加ROLE_
+
 
         auth.inMemoryAuthentication().
                 withUser("admin").

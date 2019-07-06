@@ -78,7 +78,7 @@
 										{{searchMap.keywords}}
 										<div class="input-append">
 											<input type="text" id="autocomplete" type="text" v-model="searchMap.keywords" class="input-error input-xxlarge" />
-											<button class="sui-btn btn-xlarge btn-danger" type="button" @click="searchList()">搜索</button>
+											<button class="sui-btn btn-xlarge btn-danger" type="button" @click="clear();searchList()">搜索</button>
 										</div>
 									</form>
 								</div>
@@ -170,7 +170,7 @@
 					<div class="fl key">商品分类</div>
 					<div class="fl value" v-for="category in resultMap.categoryList"><a href="#" @click="addSearchItem('category',category)">{{category}}</a></div>
 				</div>
-				<div class="type-wrap logo" v-if="searchMap.brand==''">
+				<div class="type-wrap logo" v-if="searchMap.brand==''&&isKeywordsIsBrand()==false">
 					<div class="fl key brand">品牌</div>
 					<div class="value logos">
 						<ul class="logo-list">
@@ -260,13 +260,19 @@
 								<a href="#">销量</a>
 							</li>
 							<li>
-								<a href="#">新品</a>
+								<a href="#" @click="doSort('updateTime','ASC')">新品↑</a>
+							</li>
+							<li>
+								<a href="#" @click="doSort('updateTime','DESC')">新品↓</a>
 							</li>
 							<li>
 								<a href="#">评价</a>
 							</li>
 							<li>
-								<a href="#">价格</a>
+								<a href="#" @click="doSort('ASC','price')">价格↑</a>
+							</li>
+							<li>
+								<a href="#" @click="doSort('DESC','price')">价格↓</a>
 							</li>
 						</ul>
 					</div>
@@ -306,33 +312,23 @@
 				<div class="fr page">
 					<div class="sui-pagination pagination-large">
 						<ul>
-							<li class="prev disabled">
-								<a href="#">«上一页</a>
+							<li :class="['prev',{'disabled':searchMap.pageNo==1}]">
+								<a href="#" @click="queryByPage(searchMap.pageNo-1)">«上一页</a>
 							</li>
-							<li class="active">
-								<a href="#">1</a>
+							<li class="dotted" v-if="preDotted"><span>...</span></li>
+							<li v-for="page in pageLabels" :class="{active:page==searchMap.pageNo}" >
+								<a href="#" @click="queryByPage(page)">{{page}}</a>
 							</li>
-							<li>
-								<a href="#">2</a>
-							</li>
-							<li>
-								<a href="#">3</a>
-							</li>
-							<li>
-								<a href="#">4</a>
-							</li>
-							<li>
-								<a href="#">5</a>
-							</li>
-							<li class="dotted"><span>...</span></li>
-							<li class="next">
-								<a href="#">下一页»</a>
+
+							<li class="dotted" v-if="nextDotted"><span>...</span></li>
+							<li :class="['next',{'disabled':resultMap.totalPages==searchMap.pageNo}]">
+								<a href="#" @click="queryByPage(searchMap.pageNo+1)">下一页»</a>
 							</li>
 						</ul>
-						<div><span>共10页&nbsp;</span><span>
+						<div><span>共{{resultMap.totalPages}}页&nbsp;</span><span>
       到第
-      <input type="text" class="page-num">
-      页 <button class="page-confirm" onclick="alert(1)">确定</button></span></div>
+      <input type="text" v-model="searchMap.pageNo" class="page-num">
+      页 <button class="page-confirm"  @click="queryByPage(searchMap.pageNo)">确定</button></span></div>
 					</div>
 				</div>
 			</div>

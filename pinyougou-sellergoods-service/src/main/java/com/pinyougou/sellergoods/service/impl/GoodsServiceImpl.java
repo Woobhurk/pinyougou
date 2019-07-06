@@ -51,6 +51,17 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
     }
 
 
+    @Override
+    public List<TbItem> findTbItemListByIds(Long[] ids) {
+        //构建查询对象
+        //select * from tb_item where goods_id in (1,2,3) and status = 1 ,
+        Example example = new Example(TbItem.class);
+        example.createCriteria().andIn("goodsId",Arrays.asList(ids));
+        example.createCriteria().andEqualTo("status", "1");
+        List<TbItem> tbItems = itemMapper.selectByExample(example);
+        return tbItems;
+    }
+
     /**
      *  更新
      * @param goods

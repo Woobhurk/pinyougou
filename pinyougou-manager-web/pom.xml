@@ -30,10 +30,20 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.itheima</groupId>-->
+            <!--<artifactId>pinyougou-search-service</artifactId>-->
+            <!--<version>1.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.itheima</groupId>
             <artifactId>pinyougou-sellergoods-interface</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itheima</groupId>
+            <artifactId>pinyougou-search-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -92,6 +102,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
 
         <dependency>
             <groupId>org.apache.curator</groupId>
