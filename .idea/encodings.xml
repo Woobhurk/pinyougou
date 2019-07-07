@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/itheima-elasticsearch-text" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/itheima-freemarker" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/itheima-spring-security-demo" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-common" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-content-interface" charset="UTF-8" />
@@ -10,6 +11,8 @@
     <file url="file://$PROJECT_DIR$/pinyougou-dao" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-es-import" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-manager-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pinyougou-page-interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pinyougou-page-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-parent" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-pojo" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pinyougou-portal-web" charset="UTF-8" />
