@@ -11,4 +11,8 @@ public interface ItemPageService {
      * @param goodsId
      */
     public void genItemHtml(Long goodsId);
+
+    public void deleteById(Long[] goodsId);
+
+
 }

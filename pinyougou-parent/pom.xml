@@ -29,6 +29,8 @@
       <module>../itheima-freemarker</module>
       <module>../pinyougou-page-interface</module>
     <module>../pinyougou-page-service</module>
+      <module>../itheima-rocketmq-producer</module>
+    <module>../itheima-rocketmq-consumer</module>
 
 
   </modules>

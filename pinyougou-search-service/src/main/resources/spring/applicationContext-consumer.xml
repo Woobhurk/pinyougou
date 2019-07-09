@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--配置消费者配置项-->
+    <bean class="org.apache.rocketmq.client.consumer.DefaultMQPushConsumer" id="defaultMQPushConsumer"
+          init-method="start" destroy-method="shutdown">
+        <!--IP地址-->
+        <!--<property name="namesrvAddr" value="119.29.4.133:9876"></property>-->
+        <property name="namesrvAddr" value="192.168.25.129:9876"></property>
+        <!--消费者组-->
+        <property name="consumerGroup" value="consumer_search_group"></property>
+        <!--设置集群模式-->
+        <property name="messageModel" value="CLUSTERING"></property>
+        <!--设置主题-->
+        <property name="subscription">
+            <map>
+                <!--key:就是topic  value就是标签 和生产者保持一致-->
+                <entry key="Goods_topic" value="*"></entry>
+            </map>
+        </property>
+        <!--监听器-->
+        <property name="messageListener" ref="messageListener"></property>
+    </bean>
+    <bean class="com.pinyougou.search.listener.GoodsMessageListener" id="messageListener"></bean>
+
+
+</beans>

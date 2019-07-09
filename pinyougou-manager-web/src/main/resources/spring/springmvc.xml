@@ -17,7 +17,7 @@
             <!--json转换器 使用FastJsonHttpMessageConverter 并支持json转成字符串-->
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="defaultCharset" value="utf-8"></property>
-                <property name="supportedMediaTypes" >
+                <property name="supportedMediaTypes">
                     <list>
                         <value>text/html;charset=utf-8</value>
                         <value>application/json;charset=utf-8</value>
@@ -48,6 +48,6 @@
 
     <!--引入spring-security.xml-->
     <import resource="spring-security.xml"></import>
-
+    <import resource="spring-producer.xml"></import>
 
 </beans>

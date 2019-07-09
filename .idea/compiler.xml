@@ -8,6 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="itheima-elasticsearch-text" />
         <module name="itheima-freemarker" />
+        <module name="itheima-rocketmq-consumer" />
+        <module name="itheima-rocketmq-producer" />
         <module name="itheima-spring-security-demo" />
         <module name="pinyougou-common" />
         <module name="pinyougou-content-interface" />
@@ -33,6 +35,8 @@
       <module name="itheima-elasticsearch-demo" target="1.8" />
       <module name="itheima-elasticsearch-text" target="1.8" />
       <module name="itheima-freemarker" target="1.8" />
+      <module name="itheima-rocketmq-consumer" target="1.8" />
+      <module name="itheima-rocketmq-producer" target="1.8" />
       <module name="itheima-spring-security-demo" target="1.8" />
       <module name="itheima_MBG" target="1.8" />
       <module name="pinyougou-common" target="1.8" />

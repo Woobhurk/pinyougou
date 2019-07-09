@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/itheima-elasticsearch-text/itheima-elasticsearch-text.iml" filepath="$PROJECT_DIR$/itheima-elasticsearch-text/itheima-elasticsearch-text.iml" />
       <module fileurl="file://$PROJECT_DIR$/itheima-freemarker/itheima-freemarker.iml" filepath="$PROJECT_DIR$/itheima-freemarker/itheima-freemarker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/itheima-rocketmq-consumer/itheima-rocketmq-consumer.iml" filepath="$PROJECT_DIR$/itheima-rocketmq-consumer/itheima-rocketmq-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/itheima-rocketmq-producer/itheima-rocketmq-producer.iml" filepath="$PROJECT_DIR$/itheima-rocketmq-producer/itheima-rocketmq-producer.iml" />
       <module fileurl="file://$PROJECT_DIR$/itheima-spring-security-demo/itheima-spring-security-demo.iml" filepath="$PROJECT_DIR$/itheima-spring-security-demo/itheima-spring-security-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-common/pinyougou-common.iml" filepath="$PROJECT_DIR$/pinyougou-common/pinyougou-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-content-interface/pinyougou-content-interface.iml" filepath="$PROJECT_DIR$/pinyougou-content-interface/pinyougou-content-interface.iml" />

@@ -106,6 +106,12 @@
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-redis:2.0.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-keyvalue:2.0.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-oxm:5.0.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.apache.rocketmq:rocketmq-client:4.4.0" />
+          <element id="library" level="project" name="Maven: org.apache.rocketmq:rocketmq-common:4.4.0" />
+          <element id="library" level="project" name="Maven: org.apache.rocketmq:rocketmq-remoting:4.4.0" />
+          <element id="library" level="project" name="Maven: io.netty:netty-all:4.0.42.Final" />
+          <element id="library" level="project" name="Maven: org.apache.rocketmq:rocketmq-logging:4.4.0" />
+          <element id="library" level="project" name="Maven: io.netty:netty-tcnative-boringssl-static:1.1.33.Fork26" />
           <element id="archive" name="pinyougou-page-interface-1.0-SNAPSHOT.jar">
             <element id="module-output" name="pinyougou-page-interface" />
           </element>
