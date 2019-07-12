@@ -31,6 +31,9 @@
     <module>../pinyougou-page-service</module>
       <module>../itheima-rocketmq-producer</module>
     <module>../itheima-rocketmq-consumer</module>
+      <module>../pinyougou-user-interface</module>
+    <module>../pinyougou-user-service</module>
+      <module>../pinyougou-user-web</module>
 
 
   </modules>
@@ -379,6 +382,7 @@
         <artifactId>rocketmq-client</artifactId>
         <version>${rocketmq-version}</version>
       </dependency>
+
 
     </dependencies>
 

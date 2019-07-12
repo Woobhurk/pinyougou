@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/itheima-sms-service" />
     <file type="web" url="file://$PROJECT_DIR$/itheima-spring-security-demo" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-content-service" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-manager-web" />
@@ -11,6 +12,8 @@
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-sellergoods-service" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-shop-web" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-upload-web" />
+    <file type="web" url="file://$PROJECT_DIR$/pinyougou-user-service" />
+    <file type="web" url="file://$PROJECT_DIR$/pinyougou-user-web" />
   </component>
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
@@ -20,6 +23,8 @@
       <list>
         <option value="$PROJECT_DIR$/pinyougou-parent/pom.xml" />
         <option value="$PROJECT_DIR$/pinyougou-core-service/pom.xml" />
+        <option value="$PROJECT_DIR$/itheima-sms-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/itheima-sms-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
