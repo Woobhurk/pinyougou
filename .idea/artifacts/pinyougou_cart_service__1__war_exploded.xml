@@ -1,0 +1,52 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="pinyougou-cart-service (1):war exploded">
+    <output-path>$PROJECT_DIR$/pinyougou-cart-service/target/pinyougou-cart-service-1.0-SNAPSHOT</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="pinyougou-cart-service (1)" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.apache.activemq:activemq-camel:5.4.2" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging-api:1.1" />
+          <element id="library" level="project" name="Maven: org.apache.activemq:activemq-core:5.4.2" />
+          <element id="library" level="project" name="Maven: org.apache.activemq:activeio-core:3.1.2" />
+          <element id="library" level="project" name="Maven: org.apache.activemq:kahadb:5.4.2" />
+          <element id="library" level="project" name="Maven: org.apache.activemq.protobuf:activemq-protobuf:1.1" />
+          <element id="library" level="project" name="Maven: org.osgi:org.osgi.core:4.1.0" />
+          <element id="library" level="project" name="Maven: org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec:1.0.1" />
+          <element id="library" level="project" name="Maven: commons-net:commons-net:2.0" />
+          <element id="library" level="project" name="Maven: org.jasypt:jasypt:1.6" />
+          <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.1" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.1" />
+          <element id="library" level="project" name="Maven: com.ibm.icu:icu4j:4.0.1" />
+          <element id="library" level="project" name="Maven: org.apache.activemq:activemq-pool:5.4.2" />
+          <element id="library" level="project" name="Maven: org.apache.geronimo.specs:geronimo-jta_1.0.1B_spec:1.0.1" />
+          <element id="library" level="project" name="Maven: commons-pool:commons-pool:1.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.xbean:xbean-spring:3.5" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.0.3" />
+          <element id="library" level="project" name="Maven: org.apache.camel:camel-jms:2.6.0" />
+          <element id="library" level="project" name="Maven: org.apache.camel:camel-core:2.6.0" />
+          <element id="library" level="project" name="Maven: org.fusesource.commonman:commons-management:1.0" />
+          <element id="library" level="project" name="Maven: org.apache.camel:camel-spring:2.6.0" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:3.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jms:5.0.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-messaging:5.0.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:3.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-asm:3.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:5.0.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.0.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:3.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:3.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" />
+          <element id="library" level="project" name="Maven: org.apache.camel:camel-stream:2.6.0" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/pinyougou-cart-service/target/pinyougou-cart-service-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="pinyougou-cart-service (1)/web/Web" />
+    </root>
+  </artifact>
+</component>

@@ -5,9 +5,11 @@
         pageNo: 1,
         list: [],
         entity: {},
+        loginName:'',
         smsCode: '',
         ids: [],
         searchEntity: {}
+
     },
     methods: {
         //注册
@@ -50,11 +52,18 @@
                 }
             )
         },
+        getName: function () {
+            axios.get('/login/name.shtml').then(
+                function (response) {
+                    app.loginName = response.data;
+                }
+            )
+        }
+    },
         //钩子函数 初始化了事件和
         created: function () {
-
-
+            this.getName();
         }
 
-    }
+
 })

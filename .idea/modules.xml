@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/itheima-cas-client/itheima-cas-client.iml" filepath="$PROJECT_DIR$/itheima-cas-client/itheima-cas-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/itheima-cas-client-springsecurity/itheima-cas-client-springsecurity.iml" filepath="$PROJECT_DIR$/itheima-cas-client-springsecurity/itheima-cas-client-springsecurity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/itheima-cas-client1/itheima-cas-client1.iml" filepath="$PROJECT_DIR$/itheima-cas-client1/itheima-cas-client1.iml" />
       <module fileurl="file://$PROJECT_DIR$/itheima-elasticsearch-text/itheima-elasticsearch-text.iml" filepath="$PROJECT_DIR$/itheima-elasticsearch-text/itheima-elasticsearch-text.iml" />
       <module fileurl="file://$PROJECT_DIR$/itheima-freemarker/itheima-freemarker.iml" filepath="$PROJECT_DIR$/itheima-freemarker/itheima-freemarker.iml" />
       <module fileurl="file://$PROJECT_DIR$/itheima-rocketmq-consumer/itheima-rocketmq-consumer.iml" filepath="$PROJECT_DIR$/itheima-rocketmq-consumer/itheima-rocketmq-consumer.iml" />
@@ -9,6 +12,8 @@
       <module fileurl="file://$PROJECT_DIR$/itheima-sms-demo/itheima-sms-demo.iml" filepath="$PROJECT_DIR$/itheima-sms-demo/itheima-sms-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/itheima-sms-service/itheima-sms-service.iml" filepath="$PROJECT_DIR$/itheima-sms-service/itheima-sms-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/itheima-spring-security-demo/itheima-spring-security-demo.iml" filepath="$PROJECT_DIR$/itheima-spring-security-demo/itheima-spring-security-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pinyougou-cart-interface/pinyougou-cart-interface.iml" filepath="$PROJECT_DIR$/pinyougou-cart-interface/pinyougou-cart-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pinyougou-cart-service/pinyougou-cart-service.iml" filepath="$PROJECT_DIR$/pinyougou-cart-service/pinyougou-cart-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-common/pinyougou-common.iml" filepath="$PROJECT_DIR$/pinyougou-common/pinyougou-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-content-interface/pinyougou-content-interface.iml" filepath="$PROJECT_DIR$/pinyougou-content-interface/pinyougou-content-interface.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-content-service/pinyougou-content-service.iml" filepath="$PROJECT_DIR$/pinyougou-content-service/pinyougou-content-service.iml" />
@@ -18,6 +23,7 @@
       <module fileurl="file://$PROJECT_DIR$/pinyougou-manager-web/pinyougou-manager-web.iml" filepath="$PROJECT_DIR$/pinyougou-manager-web/pinyougou-manager-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-page-interface/pinyougou-page-interface.iml" filepath="$PROJECT_DIR$/pinyougou-page-interface/pinyougou-page-interface.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-page-service/pinyougou-page-service.iml" filepath="$PROJECT_DIR$/pinyougou-page-service/pinyougou-page-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pinyougou-page-web/pinyougou-page-web.iml" filepath="$PROJECT_DIR$/pinyougou-page-web/pinyougou-page-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-parent/pinyougou-parent.iml" filepath="$PROJECT_DIR$/pinyougou-parent/pinyougou-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-pojo/pinyougou-pojo.iml" filepath="$PROJECT_DIR$/pinyougou-pojo/pinyougou-pojo.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-portal-web/pinyougou-portal-web.iml" filepath="$PROJECT_DIR$/pinyougou-portal-web/pinyougou-portal-web.iml" />
@@ -31,6 +37,7 @@
       <module fileurl="file://$PROJECT_DIR$/pinyougou-user-interface/pinyougou-user-interface.iml" filepath="$PROJECT_DIR$/pinyougou-user-interface/pinyougou-user-interface.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-user-service/pinyougou-user-service.iml" filepath="$PROJECT_DIR$/pinyougou-user-service/pinyougou-user-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinyougou-user-web/pinyougou-user-web.iml" filepath="$PROJECT_DIR$/pinyougou-user-web/pinyougou-user-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pinyouogu-cart-web/pinyouogu-cart-web.iml" filepath="$PROJECT_DIR$/pinyouogu-cart-web/pinyouogu-cart-web.iml" />
     </modules>
   </component>
 </project>

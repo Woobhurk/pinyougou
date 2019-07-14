@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file url="file://$PROJECT_DIR$/pinyougou-cart-service/overlays" />
+    <file type="web" url="file://$PROJECT_DIR$/itheima-cas-client" />
+    <file type="web" url="file://$PROJECT_DIR$/itheima-cas-client-springsecurity" />
+    <file type="web" url="file://$PROJECT_DIR$/itheima-cas-client1" />
     <file type="web" url="file://$PROJECT_DIR$/itheima-sms-service" />
     <file type="web" url="file://$PROJECT_DIR$/itheima-spring-security-demo" />
+    <file type="web" url="file://$PROJECT_DIR$/pinyougou-cart-service" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-content-service" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-manager-web" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-page-service" />
+    <file type="web" url="file://$PROJECT_DIR$/pinyougou-page-web" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-portal-web" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-search-service" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-search-web" />
@@ -14,6 +20,7 @@
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-upload-web" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-user-service" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou-user-web" />
+    <file type="web" url="file://$PROJECT_DIR$/pinyouogu-cart-web" />
   </component>
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />

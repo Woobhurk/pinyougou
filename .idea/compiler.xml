@@ -6,6 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="itheima-cas-client" />
+        <module name="itheima-cas-client-springsecurity" />
+        <module name="itheima-cas-client1" />
         <module name="itheima-elasticsearch-text" />
         <module name="itheima-freemarker" />
         <module name="itheima-rocketmq-consumer" />
@@ -13,6 +16,8 @@
         <module name="itheima-sms-demo" />
         <module name="itheima-sms-service" />
         <module name="itheima-spring-security-demo" />
+        <module name="pinyougou-cart-interface" />
+        <module name="pinyougou-cart-service" />
         <module name="pinyougou-common" />
         <module name="pinyougou-content-interface" />
         <module name="pinyougou-content-service" />
@@ -22,6 +27,7 @@
         <module name="pinyougou-manager-web" />
         <module name="pinyougou-page-interface" />
         <module name="pinyougou-page-service" />
+        <module name="pinyougou-page-web" />
         <module name="pinyougou-pojo" />
         <module name="pinyougou-portal-web" />
         <module name="pinyougou-search-interface" />
@@ -34,9 +40,13 @@
         <module name="pinyougou-user-interface" />
         <module name="pinyougou-user-service" />
         <module name="pinyougou-user-web" />
+        <module name="pinyouogu-cart-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="itheima-cas-client" target="1.8" />
+      <module name="itheima-cas-client-springsecurity" target="1.8" />
+      <module name="itheima-cas-client1" target="1.8" />
       <module name="itheima-elasticsearch-demo" target="1.8" />
       <module name="itheima-elasticsearch-text" target="1.8" />
       <module name="itheima-freemarker" target="1.8" />
@@ -46,6 +56,9 @@
       <module name="itheima-sms-service" target="1.8" />
       <module name="itheima-spring-security-demo" target="1.8" />
       <module name="itheima_MBG" target="1.8" />
+      <module name="pinyougou-cart-interface" target="1.8" />
+      <module name="pinyougou-cart-service" target="1.8" />
+      <module name="pinyougou-cart-service (1)" target="1.5" />
       <module name="pinyougou-common" target="1.8" />
       <module name="pinyougou-content-interface" target="1.8" />
       <module name="pinyougou-content-service" target="1.8" />
@@ -55,6 +68,7 @@
       <module name="pinyougou-manager-web" target="1.8" />
       <module name="pinyougou-page-interface" target="1.8" />
       <module name="pinyougou-page-service" target="1.8" />
+      <module name="pinyougou-page-web" target="1.8" />
       <module name="pinyougou-parent" target="1.8" />
       <module name="pinyougou-pojo" target="1.8" />
       <module name="pinyougou-portal-web" target="1.8" />
@@ -68,6 +82,7 @@
       <module name="pinyougou-user-interface" target="1.8" />
       <module name="pinyougou-user-service" target="1.8" />
       <module name="pinyougou-user-web" target="1.8" />
+      <module name="pinyouogu-cart-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

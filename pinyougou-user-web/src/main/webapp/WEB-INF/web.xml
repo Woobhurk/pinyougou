@@ -40,15 +40,15 @@
         <url-pattern>*.shtml</url-pattern>
     </servlet-mapping>
 
-    <!--过滤器的名称不能改   springSecurityFilterChain-->
-    <!--<filter>-->
-        <!--<filter-name>springSecurityFilterChain</filter-name>-->
-        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-        <!--<filter-name>springSecurityFilterChain</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
+    <!--过滤器的名称不能改   springSecurityFilterChain 委托过滤器-->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 
 

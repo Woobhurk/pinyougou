@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="itheima-cas-client:war">
+    <output-path>$PROJECT_DIR$/itheima-cas-client/target</output-path>
+    <root id="archive" name="itheima-cas-client.war">
+      <element id="artifact" artifact-name="itheima-cas-client:war exploded" />
+    </root>
+  </artifact>
+</component>

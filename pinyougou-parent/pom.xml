@@ -34,6 +34,13 @@
       <module>../pinyougou-user-interface</module>
     <module>../pinyougou-user-service</module>
       <module>../pinyougou-user-web</module>
+      <module>../itheima-cas-client</module>
+      <module>../itheima-cas-client1</module>
+      <module>../itheima-cas-client-springsecurity</module>
+      <module>../pinyougou-cart-interface</module>
+    <module>../pinyougou-cart-service</module>
+    <module>../pinyouogu-cart-web</module>
+      <module>../pinyougou-page-web</module>
 
 
   </modules>

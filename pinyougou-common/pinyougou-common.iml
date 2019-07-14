@@ -48,5 +48,6 @@
     <orderEntry type="library" name="Maven: io.netty:netty-all:4.0.42.Final" level="project" />
     <orderEntry type="library" name="Maven: org.apache.rocketmq:rocketmq-logging:4.4.0" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-tcnative-boringssl-static:1.1.33.Fork26" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
   </component>
 </module>
