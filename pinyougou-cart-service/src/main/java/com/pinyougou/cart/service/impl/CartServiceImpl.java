@@ -2,6 +2,7 @@ package com.pinyougou.cart.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.pinyougou.cart.service.CartService;
+import com.pinyougou.common.constant.Constant;
 import com.pinyougou.mapper.TbItemMapper;
 import entity.Cart;
 import com.pinyougou.pojo.TbItem;
@@ -20,6 +21,8 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+
 
     @Override
     public List<Cart> addGoodsToCartList(List<Cart> cartList, Long itemId, Integer num) {
@@ -99,12 +102,12 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<Cart> findCartListFromRedis(String username) {
-        return (List<Cart>) redisTemplate.boundHashOps("cartList").get(username);
+        return (List<Cart>) redisTemplate.boundHashOps(Constant.CART_REDIS_KEY).get(username);
     }
 
     @Override
     public void saveCartListToRedis(String username, List<Cart> cartList) {
-        redisTemplate.boundHashOps("cartList").put(username,cartList);
+        redisTemplate.boundHashOps(Constant.CART_REDIS_KEY).put(username,cartList);
     }
 
     /**
