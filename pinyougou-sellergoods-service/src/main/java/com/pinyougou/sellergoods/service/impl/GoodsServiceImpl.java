@@ -152,7 +152,7 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
 
                 //设置图片从goodsDesc中获取
                 String itemImages = goods.getGoodsDesc().getItemImages();
-                //[{"color":"灰色","url":"http://192.168.25.133/group1/M00/00/00/wKgZhV0UIr6AEGQjAAAbnsHIuy8707.jpg"}]
+                //[{"color":"灰色","url":"http://192.168.25.129/group1/M00/00/00/wKgZhV0UIr6AEGQjAAAbnsHIuy8707.jpg"}]
                 //转为对象 取出其中的url
                 List<Map> maps = JSON.parseArray(itemImages, Map.class);
                 String url = maps.get(0).get("url").toString();//图片的地址
@@ -199,7 +199,7 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
             tbItem.setSpec("{}");//没有选用设置为空
 
 //设置图片从goodsDesc中获取
-            //[{"color":"黑色","url":"http://192.168.25.133/group1/M00/00/03/wKgZhVq7N-qAEDgSAAJfMemqtP8461.jpg"}]
+            //[{"color":"黑色","url":"http://192.168.25.129/group1/M00/00/03/wKgZhVq7N-qAEDgSAAJfMemqtP8461.jpg"}]
             String itemImages = goodsDesc.getItemImages();//
 
             List<Map> maps = JSON.parseArray(itemImages, Map.class);

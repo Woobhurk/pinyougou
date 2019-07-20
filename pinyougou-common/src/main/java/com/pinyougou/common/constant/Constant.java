@@ -8,15 +8,30 @@ public class Constant {
     public static final String PAYLOG_REDIS_KEY = "payLog";
 
 
+    //秒杀中的某商品的队列名前缀
+    //一个商品就是一个队列  队列中的数据便是商品本身 队列的长度便是 商品的库存
+    public static final String SEC_KILL_GOODS_PREFIX="SEC_KILL_GOODS_ID_";
 
-    //用于微信支付的企业方公众号id
-    public static final String NATIVE_PAYCONFIG_APPID = "wx8397f8696b538317";
-    //用于微信支付的财付通平台的商户账号
-    public static final String NATIVE_PAYCONFIG_PARTNER = "1473426802";
-    //用于微信支付的财付通平台的商户密钥
-    public static final String NATIVE_PAYCONFIG_PARTNERKEY = "T6m9iK73b0kn9g5v426MKfHQH7X8rKwb";
-    //用于微信支付的回调 URL
-    public static final String NATIVE_PAYCONFIG_NOTIFYURL = "http://a31ef7db.ngrok.io/WeChatPay/WeChatPayNotify";
+
+
+    //用于表示用户抢购的下单的排队
+    public static final String SEC_KILL_USER_ORDER_LIST="SEC_KILL_USER_ORDER_LIST";
+
+    //用于标识某商品被抢购的人数队列的名字前缀  一个商品就是一个队列
+
+    public static final String SEC_KILL_LIMIT_PREFIX="SEC_KILL_LIMIT_SEC_ID_";
+
+    //用于标识用户已秒杀下单排队中的key
+    public static final String SEC_USER_QUEUE_FLAG_KEY="SEC_USER_QUEUE_FLAG_KEY";
+
+
+    public static final String CONTENT_REDIS_KEY="CONTENT_REDIS_KEY";
+
+    //所有商品的集合数据的KEY
+    public static final String SEC_KILL_GOODS="seckillGoods";
+
+    //秒杀商品的订单的KEY
+    public static final String SEC_KILL_ORDER="seckillOrder";
 
 
 

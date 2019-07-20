@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--组件扫描-->
+    <context:property-placeholder location="classpath:properties/*.properties"></context:property-placeholder>
+    <!--配置dubbo的配置项-->
+    <dubbo:application name="pinyougou-seckill"></dubbo:application>
+
+    <dubbo:registry protocol="zookeeper" address="192.168.25.129" port="2181"></dubbo:registry>
+
+    <!--增加暴露服务的端口 dubbo协议 端口号20880-->
+    <dubbo:protocol name="dubbo" port="20888"></dubbo:protocol>
+
+    <!--dubbo的组件扫描 注解@service的开发-->
+    <dubbo:annotation package="com.pinyougou.seckill.service"></dubbo:annotation>
+
+    <!--超时时间100秒-->
+    <dubbo:provider timeout="100000"></dubbo:provider>
+
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer" id="freeMarkerConfigurer">
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="templateLoaderPath" value="/WEB-INF/ftl"></property>
+    </bean>
+</beans>

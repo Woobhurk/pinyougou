@@ -6,9 +6,21 @@
         list:[],
         entity:{},
         ids:[],
+
         searchEntity:{}
+
     },
     methods: {
+        //批量审核秒杀的商品
+        updateStatus:function (status) {
+            axios.post('/seckillGoods/updateStatus.shtml?status='+status,this.ids).then(function (response) {
+                    if(response.data.success){
+                        app.ids=[];
+                        app.searchList(1);
+                    }
+            });
+        },
+
         searchList:function (curPage) {
             axios.post('/seckillGoods/search.shtml?pageNo='+curPage,this.searchEntity).then(function (response) {
                 //获取数据
@@ -52,7 +64,7 @@
             axios.post('/seckillGoods/add.shtml',this.entity).then(function (response) {
                 console.log(response);
                 if(response.data.success){
-                    app.searchList(1);
+                    app.findPage();
                 }
             }).catch(function (error) {
                 console.log("1231312131321");
@@ -62,7 +74,7 @@
             axios.post('/seckillGoods/update.shtml',this.entity).then(function (response) {
                 console.log(response);
                 if(response.data.success){
-                    app.searchList(1);
+                    app.findPage();
                 }
             }).catch(function (error) {
                 console.log("1231312131321");
@@ -86,7 +98,7 @@
             axios.post('/seckillGoods/delete.shtml',this.ids).then(function (response) {
                 console.log(response);
                 if(response.data.success){
-                    app.searchList(1);
+                    app.findPage();
                 }
             }).catch(function (error) {
                 console.log("1231312131321");

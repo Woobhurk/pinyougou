@@ -15,8 +15,8 @@ public class App {
         DefaultMQProducer producer = new DefaultMQProducer("producer_cluster_group1_DLIAng");
         // producer.setVipChannelEnabled(false);
         //2.设置 nameserver的地址
-        //producer.setNamesrvAddr("119.29.4.133:9876");
-       //producer.setNamesrvAddr("127.0.0.1:9876");
+        //producer.setNamesrvAddr("192.168.25.129:9876");
+       //producer.setNamesrvAddr("192.168.25.129:9876");
         producer.setNamesrvAddr("192.168.25.129:9876");
         //3.开启连接 并使用
         producer.start();

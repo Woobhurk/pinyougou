@@ -1,10 +1,17 @@
 package com.pinyougou.manager.controller;
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
+import com.pinyougou.common.pojo.MessageInfo;
+import com.pinyougou.seckill.service.SeckillGoodsService;
+import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.remoting.common.RemotingHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.pinyougou.pojo.TbSeckillGoods;
-import com.pinyougou.sellergoods.service.SeckillGoodsService;
+
 
 import com.github.pagehelper.PageInfo;
 import entity.Result;
@@ -16,6 +23,9 @@ import entity.Result;
 @RestController
 @RequestMapping("/seckillGoods")
 public class SeckillGoodsController {
+
+	@Autowired
+	private DefaultMQProducer producer;
 
 	@Reference
 	private SeckillGoodsService seckillGoodsService;
@@ -103,5 +113,25 @@ public class SeckillGoodsController {
                                       @RequestBody TbSeckillGoods seckillGoods) {
         return seckillGoodsService.findPage(pageNo, pageSize, seckillGoods);
     }
+
+    @RequestMapping("/updateStatus")
+    public Result updateStatus(@RequestBody Long[] ids, String status){
+		try {
+			for (Long id : ids) {
+				TbSeckillGoods goods = new TbSeckillGoods();
+				goods.setId(id);
+				goods.setStatus(status);
+				seckillGoodsService.updateByPrimaryKeySelective(goods);
+			}
+			//发送消息即可  审核商品要进行页面生成
+			MessageInfo messageInfo = new MessageInfo("TOPIC_SECKILL","Tags_genHtml","seckillGoods_updateStatus",ids, MessageInfo.METHOD_ADD);
+			producer.send(new Message(messageInfo.getTopic(),messageInfo.getTags(),messageInfo.getKeys(), JSON.toJSONString(messageInfo).getBytes(RemotingHelper.DEFAULT_CHARSET)));
+			return new Result(true,"成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false,"失败");
+		}
+
+	}
 	
 }

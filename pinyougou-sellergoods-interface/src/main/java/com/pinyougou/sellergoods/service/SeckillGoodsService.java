@@ -1,9 +1,8 @@
 package com.pinyougou.sellergoods.service;
-import java.util.List;
-import com.pinyougou.pojo.TbSeckillGoods;
 
 import com.github.pagehelper.PageInfo;
 import com.pinyougou.core.service.CoreService;
+import com.pinyougou.pojo.TbSeckillGoods;
 /**
  * 服务层接口
  * @author Administrator

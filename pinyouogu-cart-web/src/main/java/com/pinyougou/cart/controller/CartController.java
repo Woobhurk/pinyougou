@@ -90,7 +90,7 @@ public class CartController {
                 CookieUtil.setCookie(request, response, "cartList", JSON.toJSONString(cartList), 3600 * 24, "UTF-8");
                 return new Result(true, "添加成功");
             } else {
-                 //获取购物车数据
+                 //获取购物车数据findCartBySellerId
                 List<Cart> cartListFromRedis = cartService.findCartListFromRedis(name);
                 //向已有的购物车中添加商品
                 List<Cart> cartListnew = cartService.addGoodsToCartList(cartListFromRedis, itemId, num);

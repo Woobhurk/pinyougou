@@ -13,7 +13,7 @@
     <artifactId>itheima-rocketmq-producer</artifactId>
 
     <name>itheima-rocketmq-producer</name>
-    <!-- FIXME change it to the project's website -->
+
     <url>http://www.example.com</url>
 
     <properties>

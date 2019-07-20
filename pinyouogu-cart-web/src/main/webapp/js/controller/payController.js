@@ -43,7 +43,8 @@ var app = new Vue({
                 if(response.data){
                     if(response.data.success){
                         //支付成功
-                        window.location.href="paysuccess.html?money="+this.payObject.totalMoney;
+                        alert("1111111111111111111111111111111")
+                        window.location.href="paysuccess.html?money="+app.payObject.total_fee;
                     }else  {
                         //支付失败
                         if(response.data.message=='支付超时'){
@@ -59,12 +60,8 @@ var app = new Vue({
                 }
             })
         }
-
-
-
 	},
 	created:function(){
-
         //页面一加载就应当调用
         if(window.location.href.indexOf("pay.html")!=-1){
             this.createNative();
@@ -72,8 +69,7 @@ var app = new Vue({
             let urlParamObject = this.getUrlParam();
             if(urlParamObject.money)
                 alert(urlParamObject.money)
-                this.totalMoney=urlParamObject.money;
-
+                this.payObject.total_fee=urlParamObject.money;
         }
     }
 
