@@ -20,4 +20,7 @@ public interface WeiXinPayService {
      * @param out_trade_no
      */
       Map queryPayStatus(String out_trade_no);
+
+
+    Map<String, String> closePay(String out_trade_no);
 }

@@ -13,11 +13,16 @@
     <http pattern="/plugins/**" security="none"></http>
     <http pattern="/seckill-*.html" security="none"></http>
     <http pattern="/seckillGoods/*.shtml" security="none"></http>
+    <http pattern="/seckillGoods/*/*.shtml" security="none"></http>
+    <http pattern="/*.html" security="none"></http>
+
 
     <!--   entry-point-ref  入口点引用 -->
     <!--入口点的含义是 这个配置文件不仅是SpringSecurity配置 还要用到cas的服务器端实现认证-->
     <!--要和别的技术做集成就可以在这里引用-->
     <http use-expressions="false" entry-point-ref="casProcessingFilterEntryPoint">
+        <intercept-url pattern="/seckillOrder/*/*.shtml" access="IS_AUTHENTICATED_ANONYMOUSLY"></intercept-url>
+        <intercept-url pattern="/seckillOrder/*.shtml" access="IS_AUTHENTICATED_ANONYMOUSLY"></intercept-url>
         <!--指定哪些请求只允许哪些用户访问-->
         <intercept-url pattern="/**" access="ROLE_USER"/>
         <!--匿名用户-->

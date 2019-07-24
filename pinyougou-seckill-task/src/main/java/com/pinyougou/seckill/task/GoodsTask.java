@@ -52,9 +52,23 @@ public class GoodsTask {
         List<TbSeckillGoods> goods = seckillGoodsMapper.selectByExample(example);
         //全部存储到redis中
         for (TbSeckillGoods good : goods) {
+            pushGoodsList(good);
             redisTemplate.boundHashOps(Constant.SEC_KILL_GOODS).put(good.getId(),good);
         }
         System.out.println(new Date());
     }
 
+    /**
+     * 一个队列就是一种商品
+     * 队列长度就是商品库存数
+     * @param goods
+     */
+    public void pushGoodsList(TbSeckillGoods goods){
+        //向同一个队列中压入商品数据
+        for (Integer i = 0; i < goods.getStockCount(); i++) {
+            //库存为多少就是多少个SIZE 值就是id即可
+            //从左边推进队列
+            redisTemplate.boundListOps(Constant.SEC_KILL_GOODS_PREFIX+goods.getId()).leftPush(goods.getId());
+        }
+    }
 }

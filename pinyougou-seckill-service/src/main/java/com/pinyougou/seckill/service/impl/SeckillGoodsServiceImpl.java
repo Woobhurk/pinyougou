@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -104,5 +107,19 @@ public class SeckillGoodsServiceImpl extends CoreServiceImpl<TbSeckillGoods>  im
 
         return pageInfo;
     }
-	
+
+	@Override
+	public Map getGoodsById(Long id) {
+		TbSeckillGoods tbSeckillGoods = (TbSeckillGoods) redisTemplate.boundHashOps(Constant.SEC_KILL_GOODS).get(id);
+		Map map = new HashMap();
+		if(tbSeckillGoods!=null ){
+
+			//剩余时间毫秒数
+			map.put("time",tbSeckillGoods.getEndTime().getTime()-new Date().getTime());
+			map.put("count",tbSeckillGoods.getStockCount());
+			return map;
+		}
+		return map;
+	}
+
 }

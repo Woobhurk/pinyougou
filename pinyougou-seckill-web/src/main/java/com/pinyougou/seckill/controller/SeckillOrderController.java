@@ -2,6 +2,7 @@ package com.pinyougou.seckill.controller;
 import java.util.List;
 
 import com.pinyougou.seckill.service.SeckillOrderService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.pinyougou.pojo.TbSeckillOrder;
@@ -39,17 +40,24 @@ public class SeckillOrderController {
 	
 	/**
 	 * 增加
-	 * @param seckillOrder
+	 * @param
 	 * @return
 	 */
-	@RequestMapping("/add")
-	public Result add(@RequestBody TbSeckillOrder seckillOrder){
+	@RequestMapping("/submitOrder/{seckillId}")
+	public Result sumbitOrder(@PathVariable(value = "seckillId") Long seckillId){
 		try {
-			seckillOrderService.add(seckillOrder);
-			return new Result(true, "增加成功");
+			String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+			if("anonymousUser".equals(userId)){
+				//表示没有登录
+				return new Result(false,"403");
+			}
+			seckillOrderService.submitOrder(seckillId, userId);
+			return new Result(true, "正在排队中");
+		} catch (RuntimeException e) {
+			return new Result(false, e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new Result(false, "增加失败");
+			return new Result(false, "抢单失败");
 		}
 	}
 	
@@ -103,5 +111,31 @@ public class SeckillOrderController {
                                       @RequestBody TbSeckillOrder seckillOrder) {
         return seckillOrderService.findPage(pageNo, pageSize, seckillOrder);
     }
+
+	@RequestMapping("/queryOrderStatus")
+	public Result queryOrderStatus(){
+		try {
+			String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+			if ("anonymousUser".equals(userId)) {
+				//如果是匿名用户 表示没有登录 提示要登陆
+				return new Result(false, "403");
+			}
+			TbSeckillOrder seckillOrder = seckillOrderService.getUserOrderStatus(userId);
+			//说明订单生成成功
+			if(seckillOrder !=null){
+				return new Result(true, "待支付");
+			}else{
+				return new Result(false, "正在排队中,请稍等");
+			}
+		} catch (RuntimeException e) {
+			return new Result(false, e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "抢单失败");
+		}
+	}
+
+
+
 	
 }

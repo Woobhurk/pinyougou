@@ -1,5 +1,6 @@
 package com.pinyougou.seckill.controller;
 import java.util.List;
+import java.util.Map;
 
 import com.pinyougou.seckill.service.SeckillGoodsService;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,12 @@ public class SeckillGoodsController {
 	public List<TbSeckillGoods> findAll(){			
 		return seckillGoodsService.findAll();
 	}
-	
+
+	@RequestMapping("/getGoodsById")
+	public Map getGoodsById(Long id){
+		return seckillGoodsService.getGoodsById(id);
+	}
+
 	
 	
 	@RequestMapping("/findPage")

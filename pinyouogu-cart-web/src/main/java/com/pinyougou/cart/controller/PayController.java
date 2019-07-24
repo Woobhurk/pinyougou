@@ -1,12 +1,10 @@
 package com.pinyougou.cart.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.pinyougou.common.util.IdWorker;
 import com.pinyougou.order.service.OrderService;
 import com.pinyougou.pay.service.WeiXinPayService;
 import com.pinyougou.pojo.TbPayLog;
 import entity.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,9 +1,8 @@
 package com.pinyougou.seckill.service;
-import java.util.List;
-import com.pinyougou.pojo.TbSeckillOrder;
 
 import com.github.pagehelper.PageInfo;
 import com.pinyougou.core.service.CoreService;
+import com.pinyougou.pojo.TbSeckillOrder;
 /**
  * 服务层接口
  * @author Administrator
@@ -12,6 +11,12 @@ import com.pinyougou.core.service.CoreService;
 public interface SeckillOrderService extends CoreService<TbSeckillOrder> {
 
 
+	/**
+	 * 秒杀下单
+	 * @param seckillId 秒杀商品的ID
+	 * @param userId 下单的用户ID
+	 */
+	  void submitOrder(Long seckillId,String userId);
 	
 	
 	/**
@@ -29,5 +34,12 @@ public interface SeckillOrderService extends CoreService<TbSeckillOrder> {
 	 * @return
 	 */
 	PageInfo<TbSeckillOrder> findPage(Integer pageNo, Integer pageSize, TbSeckillOrder SeckillOrder);
-	
+
+
+
+	TbSeckillOrder getUserOrderStatus(String userId);
+
+	void updateOrderStatus(String transaction_id, String userId);
+
+	void deleteOrder(String userId);
 }
