@@ -62,7 +62,7 @@ public class BrandServiceImpl extends CoreServiceImpl<TbBrand>  implements Brand
         Example.Criteria criteria = example.createCriteria();
 
         if(brand!=null){			
-						if(StringUtils.isNotBlank(brand.getName())){
+            if(StringUtils.isNotBlank(brand.getName())){
 				criteria.andLike("name","%"+brand.getName()+"%");
 				//criteria.andNameLike("%"+brand.getName()+"%");
 			}
@@ -80,5 +80,16 @@ public class BrandServiceImpl extends CoreServiceImpl<TbBrand>  implements Brand
 
         return pageInfo;
     }
-	
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        //update tb_brand set status=1 where id in (1,2,3)
+        Example example = new Example(TbBrand.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andIn("id", Arrays.asList(ids));
+        TbBrand tbBrand = new TbBrand();
+        tbBrand.setStatus(status);
+        brandMapper.updateByExampleSelective(tbBrand, example);
+    }
+
 }

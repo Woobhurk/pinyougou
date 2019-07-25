@@ -6,6 +6,7 @@
         list:[],
         entity:{},
         ids:[],
+        status:['未审核','已审核','审核未通过','已关闭'],
         searchEntity:{}
     },
     methods: {
@@ -18,6 +19,7 @@
                 app.pageNo=curPage;
                 //总页数
                 app.pages=response.data.pages;
+                app.ids=[];
             });
         },
         //查询所有品牌列表
@@ -91,7 +93,17 @@
             }).catch(function (error) {
                 console.log("1231312131321");
             });
-        }
+        },
+        updateStatus:function (status) {
+            axios.post('/brand/updateStatus/'+status+'.shtml',this.ids).then(function (response) {
+                console.log(response);
+                if(response.data.success){
+                    app.searchList(1);
+                }
+            }).catch(function (error) {
+                console.log("1231312131321");
+            });
+        },
 
 
 
