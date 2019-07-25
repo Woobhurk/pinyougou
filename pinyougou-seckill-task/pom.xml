@@ -85,16 +85,6 @@
 
     <build>
         <finalName>pinyougou-seckill-task</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <configuration>
-                    <path>/</path>
-                    <port>9110</port>
-                </configuration>
-            </plugin>
-        </plugins>
 
     </build>
 </project>

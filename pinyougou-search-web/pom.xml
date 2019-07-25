@@ -147,17 +147,6 @@
 
     <build>
         <finalName>pinyougou-search-web</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <configuration>
-                    <path>/</path>
-                    <port>9104</port>
-                </configuration>
-            </plugin>
-        </plugins>
-
     </build>
 
 

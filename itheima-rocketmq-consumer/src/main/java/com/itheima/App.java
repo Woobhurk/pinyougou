@@ -1,14 +1,13 @@
 package com.itheima;
 
 
+import java.util.List;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
-
-import java.util.List;
 
 /**
  * 消费者
@@ -19,9 +18,9 @@ public class App {
         //有push和pull根据业务需求来决定格式推还是拉
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("consumer_group1_DLIAng");
         //2.设置nameserver地址
-        //   consumer.setNamesrvAddr("192.168.25.129:9876");
-      //  consumer.setNamesrvAddr("192.168.25.129:9876");
-        consumer.setNamesrvAddr("192.168.25.129:9876");
+        //   consumer.setNamesrvAddr("192.168.146.130:9876");
+      //  consumer.setNamesrvAddr("192.168.146.130:9876");
+        consumer.setNamesrvAddr("192.168.146.130:9876");
 
         //3.设置主题 设置主题中的标签 (从哪个主题中的哪个标签取消息,和生产者一致)
         //如果想获取主题所有标签的信息可以使用*

@@ -11,7 +11,7 @@
 
     <!--链接ES的客户端 ：host ,port-->
 
-    <elasticsearch:transport-client id="client" cluster-name="elasticsearch" cluster-nodes="192.168.25.129:9300"></elasticsearch:transport-client>
+    <elasticsearch:transport-client id="client" cluster-name="elasticsearch" cluster-nodes="192.168.146.130:9300"></elasticsearch:transport-client>
 
 
     <!--配置elasticsearchTemplate核心类：提供了CRUD的方法-->

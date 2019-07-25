@@ -153,16 +153,5 @@
 
     <build>
         <finalName>pinyougou-page-service</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <configuration>
-                    <path>/</path>
-                    <port>9005</port>
-                </configuration>
-            </plugin>
-        </plugins>
-
     </build>
 </project>

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginUserInfoController {
 
     @RequestMapping("/getName")
-    public String getLoginName(){
+    public String getLoginName() {
         //获取用户信息 取得登陆用户的 用户名
-       return SecurityContextHolder.getContext().getAuthentication().getName();
+        return SecurityContextHolder.getContext().getAuthentication().getName();
 
     }
 
