@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 
 public class OrderItemChart implements Serializable {
-    private Long parentId;
+    private Long itemCatId;
     private String name;
     private Double value;
     private List<OrderItemChart> children;
 
-    public Long getParentId() {
-        return this.parentId;
+    public Long getItemCatId() {
+        return this.itemCatId;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setItemCatId(Long itemCatId) {
+        this.itemCatId = itemCatId;
     }
 
     public String getName() {
@@ -44,7 +44,7 @@ public class OrderItemChart implements Serializable {
     @Override
     public String toString() {
         return "OrderItemChart{" +
-            "parentId=" + this.parentId +
+            "itemCatId=" + this.itemCatId +
             ", name='" + this.name + '\'' +
             ", value=" + this.value +
             ", children=" + this.children +

@@ -1,14 +1,15 @@
 package com.pinyougou.sellergoods.voservice.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.pinyougou.mapper.TbItemCatMapper;
-import com.pinyougou.mapper.TbItemMapper;
 import com.pinyougou.mapper.TbOrderItemMapper;
 import com.pinyougou.pojo.TbItemCat;
 import com.pinyougou.sellergoods.voservice.OrderItemChartService;
 import entity.OrderItemChart;
+import entity.OrderItemParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
@@ -18,25 +19,24 @@ public class OrderItemChartServiceImpl implements OrderItemChartService {
     @Autowired
     private TbItemCatMapper itemCatMapper;
     @Autowired
-    private TbItemMapper itemMapper;
-    @Autowired
     private TbOrderItemMapper orderItemMapper;
 
     @Override
-    public List<OrderItemChart> countOrderItem() {
+    public List<OrderItemChart> countOrderItem(OrderItemParam orderItemParam) {
         OrderItemChart orderItemChart = new OrderItemChart();
         OrderItemChart newOrderItemChart;
 
-        orderItemChart.setParentId(0L);
-        newOrderItemChart = this.retrieveOrderChart(orderItemChart);
+        orderItemChart.setItemCatId(orderItemParam.getParentId());
+        newOrderItemChart = this.retrieveOrderChart(orderItemChart, orderItemParam);
 
         return newOrderItemChart.getChildren();
     }
 
-    /************************************************************************/
-    private OrderItemChart retrieveOrderChart(OrderItemChart orderItemChart) {
-        Long parentId = (orderItemChart.getParentId() == null) ? 0L
-            : orderItemChart.getParentId();
+    /**********************************************************************/
+    private OrderItemChart retrieveOrderChart(OrderItemChart orderItemChart,
+        OrderItemParam orderItemParam) {
+        Long parentId = (orderItemChart.getItemCatId() == null) ? 0L
+            : orderItemChart.getItemCatId();
         Example example = new Example(TbItemCat.class);
         Example.Criteria criteria = example.createCriteria();
         List<TbItemCat> itemCatList;
@@ -46,106 +46,79 @@ public class OrderItemChartServiceImpl implements OrderItemChartService {
         itemCatList = this.itemCatMapper.selectByExample(example);
 
         if (itemCatList == null || itemCatList.isEmpty()) {
-            // 没有下级分类，查找对应订单总金额
-            System.err.println("=========== NODE");
+            // 没有下级分类，查询该分类订单总金额
+            Double price;
+
+            orderItemParam.setParentId(orderItemChart.getItemCatId());
+            price = this.calculateOrderItemPrice(orderItemParam);
+            orderItemChart.setValue(price);
         } else {
-            // 有下级分类，继续递归查找
-            List<OrderItemChart> subOrderItemChartList = new ArrayList<>();
+            // 有下级，继续递归查找
+            List<OrderItemChart> subOrderItemChartList;
+            Double price;
 
-            for (TbItemCat itemCat : itemCatList) {
-                OrderItemChart subOrderItemChart = new OrderItemChart();
-
-                subOrderItemChart.setParentId(itemCat.getId());
-                subOrderItemChart.setName(itemCat.getName());
-                subOrderItemChartList.add(this.retrieveOrderChart(subOrderItemChart));
-            }
-
-            System.err.println("PARENT " + orderItemChart.getParentId());
-            System.err.println("CHILDREN " + subOrderItemChartList);
+            subOrderItemChartList = this.retrieveSubOrderItemChartList(itemCatList,
+                orderItemParam);
             orderItemChart.setChildren(subOrderItemChartList);
-
-            //for (OrderItemChart subOrderItemChart : subOrderItemChartList) {
-            //
-            //}
+            price = this.calculateOrderItemTotalPrice(orderItemChart);
+            orderItemChart.setValue(price);
         }
 
         return orderItemChart;
     }
 
-    //private List<OrderItemChart> retrieveCategory1List(List<OrderItemChart> orderItemChartList) {
-    //    Example example = new Example(TbItemCat.class);
-    //    Example.Criteria criteria = example.createCriteria();
-    //    List<TbItemCat> itemCat1List;
-    //
-    //    criteria.andEqualTo("parentId", 0);
-    //    itemCat1List = this.itemCatMapper.selectByExample(example);
-    //
-    //    for (TbItemCat itemCat1 : itemCat1List) {
-    //        OrderItemChart orderItemChart = new OrderItemChart();
-    //
-    //        orderItemChart.setName(itemCat1.getName());
-    //        orderItemChartList.add(orderItemChart);
-    //    }
-    //
-    //    return orderItemChartList;
-    //}
-    //
-    //private List<OrderItemChart> retrieveCategory2List(List<OrderItemChart> orderItemChartList,
-    //    List<TbItemCat> itemCat1List) {
-    //    Example example = new Example(TbItemCat.class);
-    //    Example.Criteria criteria = example.createCriteria();
-    //    List<TbItemCat> itemCat2List;
-    //
-    //    for (int i = 0; i < itemCat1List.size(); i++) {
-    //        List<OrderItemChart> orderItemChartList2 = new ArrayList<>();
-    //
-    //        criteria.andEqualTo("parentId", itemCat1List.get(i).getId());
-    //        itemCat2List = this.itemCatMapper.selectByExample(example);
-    //
-    //        for (TbItemCat itemCat2 : itemCat2List) {
-    //            OrderItemChart orderItemChart = new OrderItemChart();
-    //
-    //            orderItemChart.setName(itemCat2.getName());
-    //            orderItemChartList2.add(orderItemChart);
-    //        }
-    //
-    //        orderItemChartList.get(i).setChildren(orderItemChartList2);
-    //    }
-    //
-    //    return orderItemChartList;
-    //}
-    //
-    //private List<OrderItemChart> retrieveCategory3List(List<OrderItemChart> orderItemChartList,
-    //    List<TbItemCat> itemCat2List) {
-    //    Example example = new Example(TbItemCat.class);
-    //    Example.Criteria criteria = example.createCriteria();
-    //    List<TbItemCat> itemCat3List;
-    //
-    //    for (int i = 0; i < itemCat2List.size(); i++) {
-    //        List<OrderItemChart> orderItemChartList3 = new ArrayList<>();
-    //
-    //        criteria.andEqualTo("parentId", itemCat2List.get(i).getId());
-    //        itemCat3List = this.itemCatMapper.selectByExample(example);
-    //
-    //        for (TbItemCat itemCat3 : itemCat3List) {
-    //            OrderItemChart orderItemChart = new OrderItemChart();
-    //
-    //            orderItemChart.setName(itemCat3.getName());
-    //            orderItemChartList3.add(orderItemChart);
-    //        }
-    //
-    //        orderItemChartList.get(i).setChildren(orderItemChartList3);
-    //    }
-    //
-    //    return orderItemChartList;
-    //}
-    //
-    //private List<OrderItemChart> countPriceOfCategory(List<OrderItemChart> orderItemChartList) {
-    //
-    //    return orderItemChartList;
-    //}
-    //
-    //private List<Integer> splitIds(List<TbItemCat> itemCatList) {
-    //    return null;
-    //}
+    private List<OrderItemChart> retrieveSubOrderItemChartList(List<TbItemCat> itemCatList,
+        OrderItemParam orderItemParam) {
+        List<OrderItemChart> subOrderItemChartList = new ArrayList<>();
+
+        for (TbItemCat itemCat : itemCatList) {
+            OrderItemChart subOrderItemChart = new OrderItemChart();
+
+            subOrderItemChart.setItemCatId(itemCat.getId());
+            subOrderItemChart.setName(itemCat.getName());
+            //subOrderItemChart.setValue(new Random().nextDouble() * 1000);
+            subOrderItemChartList.add(
+                this.retrieveOrderChart(subOrderItemChart, orderItemParam));
+        }
+
+        return subOrderItemChartList;
+    }
+
+    private Double calculateOrderItemPrice(OrderItemParam orderItemParam) {
+        Double price;
+
+        if (orderItemParam.getParentId() == null
+            || orderItemParam.getParentId() < 0) {
+            orderItemParam.setParentId(0L);
+        }
+
+        if (orderItemParam.getStartTime() == null) {
+            orderItemParam.setStartTime(new Date(0L));
+        }
+
+        if (orderItemParam.getEndTime() == null) {
+            orderItemParam.setEndTime(new Date());
+        }
+
+        price = this.orderItemMapper.countPriceOfCategory(orderItemParam);
+
+        return (price == null) ? 0.0 : price;
+    }
+
+    private Double calculateOrderItemTotalPrice(OrderItemChart orderItemChart) {
+        List<OrderItemChart> children = orderItemChart.getChildren();
+        Double price;
+
+        if (children == null || children.isEmpty()) {
+            price = orderItemChart.getValue();
+        } else {
+            price = 0.0;
+
+            for (OrderItemChart subOrderItemChart : children) {
+                price += this.calculateOrderItemTotalPrice(subOrderItemChart);
+            }
+        }
+
+        return price;
+    }
 }
