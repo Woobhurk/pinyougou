@@ -31,6 +31,12 @@ public class TbSpecificationOption implements Serializable {
     @Column(name = "orders")
     private Integer orders;
 
+    /**
+     * 审核状态
+     */
+    @Column(name = "status")
+    private String status;
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -103,5 +109,13 @@ public class TbSpecificationOption implements Serializable {
      */
     public void setOrders(Integer orders) {
         this.orders = orders;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

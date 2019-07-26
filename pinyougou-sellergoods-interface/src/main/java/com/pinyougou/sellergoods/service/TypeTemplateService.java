@@ -34,4 +34,6 @@ public interface TypeTemplateService extends CoreService<TbTypeTemplate> {
 	//根据模板的id 获取模板的对象中的规格的数据 拼接成 : [{id:27,'text':'网络',options:[{},{}] },{id:28,'text':'11',options:[{},{}]} ]
 
 	List<Map> findSpecList(Long typeTmplateId);
+
+    void updateStatus(Long[] ids, String status);
 }

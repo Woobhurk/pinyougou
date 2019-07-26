@@ -5,7 +5,7 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>品牌管理</title>
+    <title>规格管理</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
@@ -22,7 +22,7 @@
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
-                        <h3 class="box-title">品牌审核</h3>
+                        <h3 class="box-title">规格审核</h3>
                     </div>
 
                     <div class="box-body">
@@ -48,32 +48,29 @@
 			                      <thead>
 								  <tr>
 									  <th class="" style="padding-right:0px">
-										  <input id="selall" type="checkbox" :value="entity.id" v-model="ids" class="icheckbox_square-blue">
+										  <input id="selall" type="checkbox" class="icheckbox_square-blue">
 									  </th>
-									  <th class="sorting_asc">品牌ID</th>
-									  <th class="sorting">品牌名称</th>
-									  <th class="sorting">品牌首字母</th>
-									  <th class="sorting">审核状态</th>
+									  <th class="sorting_asc">规格项ID</th>
+									  <th class="sorting">规格项名称</th>
+									  <th class="text-center">所属规格ID</th>
+									  <th class="text-center">审核状态</th>
 								  </tr>
 			                      </thead>
 			                      <tbody>
 								  <tr v-for="entity in list">
 									  <td><input type="checkbox" :value="entity.id" v-model="ids" ></td>
 									  <td>{{entity.id}}</td>
-									  <td>{{entity.name}}</td>
-									  <td>{{entity.firstChar}}</td>
+									  <td>{{entity.optionName}}</td>
+									  <td>{{entity.specId}}</td>
 									  <td>
 		                                  	<span>
 		                                  		{{status[entity.status]}}
 		                                  	</span>
-
 									  </td>
 								  </tr>
 			                      </tbody>
 			                  </table>
-			                  <!--数据列表/-->                        
-							  
-							 
+			                  <!--数据列表/-->
                         </div>
                         <!-- 数据表格 /-->
 						<navigation :pages="pages" :current.sync="pageNo"  @navpage="searchList"></navigation>
@@ -87,6 +84,6 @@
 <script src="../js/controller/base.js"></script>
 <script src="../plugins/axios/axios.js"></script>
 <script src="../js/pagination.js"></script>
-<script src="../js/controller/brandController.js"></script>
+<script src="../js/controller/specOptionController.js"></script>
 
 </html>

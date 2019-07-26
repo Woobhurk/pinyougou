@@ -7,10 +7,7 @@ import com.pinyougou.pojo.TbSpecification;
 import com.pinyougou.sellergoods.service.SpecificationService;
 import entity.Result;
 import entity.Specification;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * controller
@@ -114,6 +111,39 @@ public class SpecificationController {
         @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
         @RequestBody TbSpecification specification) {
         return this.specificationService.findPage(pageNo, pageSize, specification);
+    }
+
+    /**
+     * 返回规格选项列表
+     * @param pageNo
+     * @param pageSize
+     * @param specification
+     * @return
+     */
+    @RequestMapping("/searchByOption")
+    public PageInfo<TbSpecification> findPageByOption(
+            @RequestParam(value = "pageNo", defaultValue = "1", required = false) Integer pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+            @RequestBody TbSpecification specification) {
+        return this.specificationService.findPageByOption(pageNo, pageSize, specification);
+    }
+
+    /**
+     * 更新规格选项表的status
+     * @param ids
+     * @param status
+     * @return
+     */
+    @RequestMapping("/updateStatus/{status}")
+    public Result updateStatus(@RequestBody Long[] ids, @PathVariable(value = "status") String status) {
+
+        try {
+            specificationService.updateStatus(ids,status);
+            return new Result(true, "更新成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "更新失败");
+        }
     }
 
 }
