@@ -31,7 +31,7 @@ class OrderItemChartVm {
                     new Date(2000, 10, 10, 10, 10),
                     new Date(2019, 10, 11, 10, 10)
                 ],
-                orderItemParam: {
+                orderItemChartParam: {
                     parentId: 0,
                     startTime: new Date(2000, 10, 10, 10, 10),
                     endTime: new Date(2019, 10, 11, 10, 10)
@@ -103,7 +103,7 @@ class OrderItemChartVm {
                 this.toolPanel.selectedCategory3 = null;
             });
 
-        this.toolPanel.orderItemParam.parentId = parentId;
+        this.toolPanel.orderItemChartParam.parentId = parentId;
         this.loadChartData();
     }
 
@@ -116,7 +116,7 @@ class OrderItemChartVm {
                 this.toolPanel.selectedCategory3 = null;
             });
 
-        this.toolPanel.orderItemParam.parentId = parentId;
+        this.toolPanel.orderItemChartParam.parentId = parentId;
         this.loadChartData();
     }
 
@@ -124,8 +124,8 @@ class OrderItemChartVm {
         let startTime = this.toolPanel.selectedDate[0];
         let endTime = this.toolPanel.selectedDate[1];
 
-        this.toolPanel.orderItemParam.startTime = startTime;
-        this.toolPanel.orderItemParam.endTime = endTime;
+        this.toolPanel.orderItemChartParam.startTime = startTime;
+        this.toolPanel.orderItemChartParam.endTime = endTime;
     }
 
     clearChartParam() {
@@ -134,19 +134,19 @@ class OrderItemChartVm {
         this.toolPanel.selectedCategory1 = null;
         this.toolPanel.selectedCategory2 = null;
         this.toolPanel.selectedCategory3 = null;
-        this.toolPanel.orderItemParam.parentId = null;
-        this.toolPanel.orderItemParam.startTime = new Date(
+        this.toolPanel.orderItemChartParam.parentId = null;
+        this.toolPanel.orderItemChartParam.startTime = new Date(
             2000, 10, 10, 10, 10);
-        this.toolPanel.orderItemParam.endTime = new Date(
+        this.toolPanel.orderItemChartParam.endTime = new Date(
             2019, 10, 11, 10, 10);
         this.loadChartData();
     }
 
     loadChartData() {
-        let orderItemParam = this.toolPanel.orderItemParam;
+        let orderItemChartParam = this.toolPanel.orderItemChartParam;
 
         AjaxUtils.post(`${SELLER_GOODS_WEB}/orderItemChart/countOrderItem.shtml`,
-            orderItemParam, resultInfo => {
+            orderItemChartParam, resultInfo => {
                 this.sunburstChart.setOption({
                     series: {
                         type: 'sunburst',

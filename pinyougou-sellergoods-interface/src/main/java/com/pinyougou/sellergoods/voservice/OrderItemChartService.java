@@ -2,8 +2,8 @@ package com.pinyougou.sellergoods.voservice;
 
 import java.util.List;
 import entity.OrderItemChart;
-import entity.OrderItemParam;
+import entity.OrderItemChartParam;
 
 public interface OrderItemChartService {
-    List<OrderItemChart> countOrderItem(OrderItemParam orderItemParam);
+    List<OrderItemChart> countOrderItem(OrderItemChartParam orderItemChartParam);
 }

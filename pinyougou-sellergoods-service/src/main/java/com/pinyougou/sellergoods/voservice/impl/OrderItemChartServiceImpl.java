@@ -9,7 +9,7 @@ import com.pinyougou.mapper.TbOrderItemMapper;
 import com.pinyougou.pojo.TbItemCat;
 import com.pinyougou.sellergoods.voservice.OrderItemChartService;
 import entity.OrderItemChart;
-import entity.OrderItemParam;
+import entity.OrderItemChartParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
@@ -22,19 +22,19 @@ public class OrderItemChartServiceImpl implements OrderItemChartService {
     private TbOrderItemMapper orderItemMapper;
 
     @Override
-    public List<OrderItemChart> countOrderItem(OrderItemParam orderItemParam) {
+    public List<OrderItemChart> countOrderItem(OrderItemChartParam orderItemChartParam) {
         OrderItemChart orderItemChart = new OrderItemChart();
         OrderItemChart newOrderItemChart;
 
-        orderItemChart.setItemCatId(orderItemParam.getParentId());
-        newOrderItemChart = this.retrieveOrderChart(orderItemChart, orderItemParam);
+        orderItemChart.setItemCatId(orderItemChartParam.getParentId());
+        newOrderItemChart = this.retrieveOrderChart(orderItemChart, orderItemChartParam);
 
         return newOrderItemChart.getChildren();
     }
 
     /**********************************************************************/
     private OrderItemChart retrieveOrderChart(OrderItemChart orderItemChart,
-        OrderItemParam orderItemParam) {
+        OrderItemChartParam orderItemChartParam) {
         Long parentId = (orderItemChart.getItemCatId() == null) ? 0L
             : orderItemChart.getItemCatId();
         Example example = new Example(TbItemCat.class);
@@ -49,8 +49,8 @@ public class OrderItemChartServiceImpl implements OrderItemChartService {
             // 没有下级分类，查询该分类订单总金额
             Double price;
 
-            orderItemParam.setParentId(orderItemChart.getItemCatId());
-            price = this.calculateOrderItemPrice(orderItemParam);
+            orderItemChartParam.setParentId(orderItemChart.getItemCatId());
+            price = this.calculateOrderItemPrice(orderItemChartParam);
             orderItemChart.setValue(price);
         } else {
             // 有下级，继续递归查找
@@ -58,7 +58,7 @@ public class OrderItemChartServiceImpl implements OrderItemChartService {
             Double price;
 
             subOrderItemChartList = this.retrieveSubOrderItemChartList(itemCatList,
-                orderItemParam);
+                orderItemChartParam);
             orderItemChart.setChildren(subOrderItemChartList);
             price = this.calculateOrderItemTotalPrice(orderItemChart);
             orderItemChart.setValue(price);
@@ -68,7 +68,7 @@ public class OrderItemChartServiceImpl implements OrderItemChartService {
     }
 
     private List<OrderItemChart> retrieveSubOrderItemChartList(List<TbItemCat> itemCatList,
-        OrderItemParam orderItemParam) {
+        OrderItemChartParam orderItemChartParam) {
         List<OrderItemChart> subOrderItemChartList = new ArrayList<>();
 
         for (TbItemCat itemCat : itemCatList) {
@@ -78,29 +78,29 @@ public class OrderItemChartServiceImpl implements OrderItemChartService {
             subOrderItemChart.setName(itemCat.getName());
             //subOrderItemChart.setValue(new Random().nextDouble() * 1000);
             subOrderItemChartList.add(
-                this.retrieveOrderChart(subOrderItemChart, orderItemParam));
+                this.retrieveOrderChart(subOrderItemChart, orderItemChartParam));
         }
 
         return subOrderItemChartList;
     }
 
-    private Double calculateOrderItemPrice(OrderItemParam orderItemParam) {
+    private Double calculateOrderItemPrice(OrderItemChartParam orderItemChartParam) {
         Double price;
 
-        if (orderItemParam.getParentId() == null
-            || orderItemParam.getParentId() < 0) {
-            orderItemParam.setParentId(0L);
+        if (orderItemChartParam.getParentId() == null
+            || orderItemChartParam.getParentId() < 0) {
+            orderItemChartParam.setParentId(0L);
         }
 
-        if (orderItemParam.getStartTime() == null) {
-            orderItemParam.setStartTime(new Date(0L));
+        if (orderItemChartParam.getStartTime() == null) {
+            orderItemChartParam.setStartTime(new Date(0L));
         }
 
-        if (orderItemParam.getEndTime() == null) {
-            orderItemParam.setEndTime(new Date());
+        if (orderItemChartParam.getEndTime() == null) {
+            orderItemChartParam.setEndTime(new Date());
         }
 
-        price = this.orderItemMapper.countPriceOfCategory(orderItemParam);
+        price = this.orderItemMapper.countPriceOfCategory(orderItemChartParam);
 
         return (price == null) ? 0.0 : price;
     }

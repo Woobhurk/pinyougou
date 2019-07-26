@@ -2,7 +2,7 @@ package com.pinyougou.sellergoods;
 
 import com.alibaba.fastjson.JSON;
 import com.pinyougou.sellergoods.voservice.OrderItemChartService;
-import entity.OrderItemParam;
+import entity.OrderItemChartParam;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +17,10 @@ public class OrderItemChartServiceTest {
 
     @Test
     public void retrieveOrderChart() {
-        OrderItemParam orderItemParam = new OrderItemParam();
+        OrderItemChartParam orderItemChartParam = new OrderItemChartParam();
 
-        orderItemParam.setParentId(0L);
-        System.err.println(JSON.toJSON(this.orderItemChartService.countOrderItem(orderItemParam)));
+        orderItemChartParam.setParentId(0L);
+        System.err.println(JSON.toJSON(this.orderItemChartService.countOrderItem(
+            orderItemChartParam)));
     }
 }

@@ -3,7 +3,7 @@ package entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class OrderItemParam implements Serializable {
+public class OrderItemChartParam implements Serializable {
     private Long parentId;
     private String sellerId;
     private Date startTime;

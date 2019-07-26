@@ -24,7 +24,7 @@
              JOIN tb_order o ON oi.order_id = o.order_id
              JOIN tb_item i ON oi.item_id = i.id
              JOIN tb_item_cat ic ON i.categoryId = ic.id
-        WHERE i.create_time BETWEEN #{orderItemParam.startTime} AND #{orderItemParam.endTime}
-            AND i.categoryId = #{orderItemParam.parentId};
+        WHERE i.create_time BETWEEN #{orderItemChartParam.startTime} AND #{orderItemChartParam.endTime}
+            AND i.categoryId = #{orderItemChartParam.parentId};
     </select>
 </mapper>
