@@ -7,6 +7,7 @@
         entity: {customAttributeItems: []}, //初始化
         brandOptions: [],//显示品牌的列表
         specOptions: [],//显示规格的列表
+        status:['未审核','已审核','审核未通过','已关闭'],
         ids: [],
         searchEntity: {}
     },
@@ -146,7 +147,18 @@
                 str = str.substring(0, str.length - 1);
             }
             return str;
-        }
+        },
+        updateStatus:function (status) {
+            axios.post('/typeTemplate/updateStatus/'+status+'.shtml',this.ids).then(function (response) {
+                console.log(response);
+                if(response.data.success){
+                    app.searchList(1);
+                    app.ids=[];
+                }
+            }).catch(function (error) {
+                console.log("1231312131321");
+            });
+        },
 
     },
     //钩子函数 初始化了事件和

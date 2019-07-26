@@ -115,4 +115,22 @@ public class TypeTemplateController {
         return this.typeTemplateService.findPage(pageNo, pageSize, typeTemplate);
     }
 
+    /**
+     * 更新模板的status
+     * @param ids
+     * @param status
+     * @return
+     */
+    @RequestMapping("/updateStatus/{status}")
+    public Result updateStatus(@RequestBody Long[] ids, @PathVariable(value = "status") String status) {
+
+        try {
+            typeTemplateService.updateStatus(ids,status);
+            return new Result(true, "更新成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "更新失败");
+        }
+    }
+
 }

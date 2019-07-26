@@ -29,6 +29,12 @@ public class TbTypeTemplate implements Serializable {
     private String brandIds;
 
     /**
+     * 关联品牌
+     */
+    @Column(name = "status")
+    private String status;
+
+    /**
      * 自定义属性
      */
     @Column(name = "custom_attribute_items")
@@ -111,6 +117,14 @@ public class TbTypeTemplate implements Serializable {
      */
     public String getCustomAttributeItems() {
         return customAttributeItems;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     /**

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -135,6 +136,17 @@ public class TypeTemplateServiceImpl extends CoreServiceImpl<TbTypeTemplate> imp
         }
         //5.返回拼接后的数据
         return maps;
+    }
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        //update tb_type_template set status=1 where id in (1,2,3)
+        Example example = new Example(TbTypeTemplate.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andIn("id", Arrays.asList(ids));
+        TbTypeTemplate tbTypeTemplate = new TbTypeTemplate();
+        tbTypeTemplate.setStatus(status);
+        typeTemplateMapper.updateByExampleSelective(tbTypeTemplate, example);
     }
 
 }
