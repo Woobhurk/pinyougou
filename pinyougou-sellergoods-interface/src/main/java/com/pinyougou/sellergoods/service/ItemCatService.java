@@ -30,5 +30,5 @@ public interface ItemCatService extends CoreService<TbItemCat> {
 	PageInfo<TbItemCat> findPage(Integer pageNo, Integer pageSize, TbItemCat ItemCat);
 
 
-
+    void updateStatus(Long[] ids, String status);
 }

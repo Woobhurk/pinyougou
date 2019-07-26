@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pinyougou.core.service.CoreServiceImpl;
 import com.pinyougou.mapper.TbItemCatMapper;
+import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.pojo.TbItemCat;
 import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.sellergoods.service.ItemCatService;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 
@@ -91,6 +93,17 @@ public class ItemCatServiceImpl extends CoreServiceImpl<TbItemCat>  implements I
         PageInfo<TbItemCat> pageInfo = JSON.parseObject(s, PageInfo.class);
 
         return pageInfo;
+    }
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        //update tb_brand set status=1 where id in (1,2,3)
+        Example example = new Example(TbItemCat.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andIn("id", Arrays.asList(ids));
+        TbItemCat tbItemCat = new TbItemCat();
+        tbItemCat.setStatus(status);
+        itemCatMapper.updateByExampleSelective(tbItemCat, example);
     }
 
 

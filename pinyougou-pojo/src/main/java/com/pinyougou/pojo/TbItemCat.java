@@ -36,6 +36,12 @@ public class TbItemCat implements Serializable {
     private String name;
 
     /**
+     * 审核状态
+     */
+    @Column(name = "status")
+    private String status;
+
+    /**
      * 类型id
      */
     @Column(name = "type_id")
@@ -113,5 +119,13 @@ public class TbItemCat implements Serializable {
      */
     public void setTypeId(Long typeId) {
         this.typeId = typeId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

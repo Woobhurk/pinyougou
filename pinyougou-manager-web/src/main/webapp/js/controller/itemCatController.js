@@ -10,8 +10,8 @@
         entity_1: {},
         entity_2: {},
         grade: 1,
-        parent_id:""
-
+        parent_id:"",
+        status:['未审核','已审核','审核未通过','已关闭'],
 
     },
     methods: {
@@ -145,15 +145,35 @@
         },
         locationReload:function () {
             window.location.reload();
-        }
+        },
+        updateStatus:function (status) {
+            axios.post('/itemCat/updateStatus/'+status+'.shtml',this.ids).then(function (response) {
+                console.log(response);
+                if(response.data.success){
+                    app.searchList(1);
+                    app.ids=[];
+                }
+            }).catch(function (error) {
+                console.log("1231312131321");
+            });
+        },
 
     },
     //钩子函数 初始化了事件和
     created: function () {
-        //在初始化的时候使用钩子函数调用声明一个初始参数
-        this.selectList({id:0});
+        if (window.location.href.indexOf("item_cat_audit.html") != -1) {
+            //说明加载此js的是item_cat_audit.html文件
+            alert("2222")
+            this.searchList(1);
+        } else {
+            //说明加载此js的是item_cat文件
+            //根据父类id查询所有
+            alert("1111")
+            this.selectList({id:0});
+        }
+
 
 
 
     }
-})
+});
