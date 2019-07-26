@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.pinyougou.mapper.TbSpecificationOptionMapper;
+import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.pojo.TbSpecificationOption;
 import entity.Specification;
 import org.aspectj.weaver.ast.Var;
@@ -84,6 +85,40 @@ public class SpecificationServiceImpl extends CoreServiceImpl<TbSpecification>  
         PageInfo<TbSpecification> pageInfo = JSON.parseObject(s, PageInfo.class);
 
         return pageInfo;
+    }
+
+    @Override
+    public PageInfo<TbSpecification> findPageByOption(Integer pageNo, Integer pageSize, TbSpecification specification) {
+        PageHelper.startPage(pageNo,pageSize);
+
+        Example example = new Example(TbSpecification.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        if(specification!=null){
+            if(StringUtils.isNotBlank(specification.getSpecName())){
+                criteria.andLike("specName","%"+specification.getSpecName()+"%");
+                //criteria.andSpecNameLike("%"+specification.getSpecName()+"%");
+            }
+
+        }
+        List<TbSpecificationOption> all = optionMapper.selectByExample(example);
+        PageInfo<TbSpecificationOption> info = new PageInfo<TbSpecificationOption>(all);
+        //序列化再反序列化
+        String s = JSON.toJSONString(info);
+        PageInfo<TbSpecification> pageInfo = JSON.parseObject(s, PageInfo.class);
+
+        return pageInfo;
+    }
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        //update tb_specification_option set status=1 where id in (1,2,3)
+        Example example = new Example(TbSpecificationOption.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andIn("id", Arrays.asList(ids));
+        TbSpecificationOption option = new TbSpecificationOption();
+        option.setStatus(status);
+        optionMapper.updateByExampleSelective(option, example);
     }
 
 
