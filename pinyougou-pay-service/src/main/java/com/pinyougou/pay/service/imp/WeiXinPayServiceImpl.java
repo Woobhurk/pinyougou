@@ -1,13 +1,12 @@
 package com.pinyougou.pay.service.imp;
 
+import java.util.HashMap;
+import java.util.Map;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.pinyougou.common.util.HttpClient;
 import com.pinyougou.pay.service.WeiXinPayService;
 import org.springframework.beans.factory.annotation.Value;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class WeiXinPayServiceImpl implements WeiXinPayService {
@@ -29,20 +28,20 @@ public class WeiXinPayServiceImpl implements WeiXinPayService {
     public Map<String,String> createNative(String out_trade_no, String total_fee) {
         //组合参数集  存储到map中 转换成xml
         HashMap<String,String> param = new HashMap<>();
-        param.put("appid", appid);//公众号
-        param.put("mch_id", partner);//商户号
+        param.put("appid", this.appid);//公众号
+        param.put("mch_id", this.partner);//商户号
         param.put("nonce_str", WXPayUtil.generateNonceStr());//随机字符串
         param.put("body", "品优购");//商品描述
         param.put("out_trade_no", out_trade_no);//商户订单号
         param.put("total_fee",total_fee);//总金额（分）
-        param.put("spbill_create_ip", "192.168.25.129");//IP
-        param.put("notify_url", notifyurl);//异步通知结果的回调地址(随便写)
+        param.put("spbill_create_ip", "192.168.146.130");//IP
+        param.put("notify_url", this.notifyurl);//异步通知结果的回调地址(随便写)
         param.put("trade_type", "NATIVE");//交易类型扫码支付
 
         try {
             //把组合好的参数 和 财富通平台商户秘钥 一起生产一个xml
             //这个方法自动添加签名 并且转为字符串
-            String xmlParam = WXPayUtil.generateSignedXml(param, partnerkey);
+            String xmlParam = WXPayUtil.generateSignedXml(param, this.partnerkey);
             System.out.println("组合好的参数和财富通平台商户秘钥 一起生产一个xml:"+xmlParam);
             //使用工具类调用接口发送请求 传入接口的地址
             HttpClient client = new HttpClient("https://api.mch.weixin.qq.com/pay/unifiedorder");
@@ -70,15 +69,15 @@ public class WeiXinPayServiceImpl implements WeiXinPayService {
     @Override
     public Map queryPayStatus(String out_trade_no) {
         Map param = new HashMap();
-        param.put("appid", appid);//公众账号ID
-        param.put("mch_id", partner);//商户号
+        param.put("appid", this.appid);//公众账号ID
+        param.put("mch_id", this.partner);//商户号
         param.put("out_trade_no", out_trade_no);//订单号
         param.put("nonce_str", WXPayUtil.generateNonceStr());//随机字符串
         //回调地址
         String url="https://api.mch.weixin.qq.com/pay/orderquery";
         try {
             //自动添加签名
-            String xmlParam = WXPayUtil.generateSignedXml(param, partnerkey);
+            String xmlParam = WXPayUtil.generateSignedXml(param, this.partnerkey);
             HttpClient client=new HttpClient(url);
             client.setHttps(true);
             client.setXmlParam(xmlParam);
@@ -102,8 +101,8 @@ public class WeiXinPayServiceImpl implements WeiXinPayService {
         try {
             //参数设置
             Map<String,String> paramMap = new HashMap<>();
-            paramMap.put("appid",appid); //应用ID
-            paramMap.put("mch_id",partner);    //商户编号
+            paramMap.put("appid", this.appid); //应用ID
+            paramMap.put("mch_id", this.partner);    //商户编号
             paramMap.put("nonce_str",WXPayUtil.generateNonceStr());//随机字符
             paramMap.put("out_trade_no",out_trade_no);   //商家的唯一编号
 

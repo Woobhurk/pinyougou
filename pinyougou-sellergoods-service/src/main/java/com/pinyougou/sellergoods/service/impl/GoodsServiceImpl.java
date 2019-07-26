@@ -1,22 +1,31 @@
 package com.pinyougou.sellergoods.service.impl;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pinyougou.core.service.CoreServiceImpl;
-import com.pinyougou.mapper.*;
-import com.pinyougou.pojo.*;
+import com.pinyougou.mapper.TbBrandMapper;
+import com.pinyougou.mapper.TbGoodsDescMapper;
+import com.pinyougou.mapper.TbGoodsMapper;
+import com.pinyougou.mapper.TbItemCatMapper;
+import com.pinyougou.mapper.TbItemMapper;
+import com.pinyougou.mapper.TbSellerMapper;
+import com.pinyougou.pojo.TbBrand;
+import com.pinyougou.pojo.TbGoods;
+import com.pinyougou.pojo.TbGoodsDesc;
+import com.pinyougou.pojo.TbItem;
+import com.pinyougou.pojo.TbItemCat;
+import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.sellergoods.service.GoodsService;
 import entity.Goods;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -58,7 +67,7 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
         Example example = new Example(TbItem.class);
         example.createCriteria().andIn("goodsId",Arrays.asList(ids));
         example.createCriteria().andEqualTo("status", "1");
-        List<TbItem> tbItems = itemMapper.selectByExample(example);
+        List<TbItem> tbItems = this.itemMapper.selectByExample(example);
         return tbItems;
     }
 
@@ -72,9 +81,9 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
         TbGoods tbGoods = goods.getGoods();
         //商家修改就要进行审核才能发布所以每次修改都要进行状态重置
         tbGoods.setAuditStatus("0");
-        goodsMapper.updateByPrimaryKey(tbGoods);
+        this.goodsMapper.updateByPrimaryKey(tbGoods);
         TbGoodsDesc tbGoodsDesc = goods.getGoodsDesc();
-        goodsDescMapper.updateByPrimaryKey(tbGoodsDesc);
+        this.goodsDescMapper.updateByPrimaryKey(tbGoodsDesc);
         //sku表需要先删除 在添加  如果直接更新会造成脏数据的问题
         //Example example = new Example(TbItem.class);
         //Example.Criteria criteria = example.createCriteria();
@@ -82,10 +91,10 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
         //itemMapper.deleteByExample(criteria);
         TbItem tbItem = new TbItem();
         tbItem.setGoodsId(tbGoods.getId());
-        itemMapper.delete(tbItem);
+        this.itemMapper.delete(tbItem);
         //新增
         List<TbItem> itemList = goods.getItemList();
-        saveItems(goods, tbGoods, tbGoodsDesc);
+        this.saveItems(goods, tbGoods, tbGoodsDesc);
 
 
     }
@@ -95,11 +104,11 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
         //根据商品id 查出所有数据返回给页面展示
         //创建组合对象往里面封装查出来的数据
         Goods goods = new Goods();
-        TbGoods tbGoods = goodsMapper.selectByPrimaryKey(id);
-        TbGoodsDesc tbGoodsDesc = goodsDescMapper.selectByPrimaryKey(id);
+        TbGoods tbGoods = this.goodsMapper.selectByPrimaryKey(id);
+        TbGoodsDesc tbGoodsDesc = this.goodsDescMapper.selectByPrimaryKey(id);
         TbItem tbItem = new TbItem();
         tbItem.setGoodsId(id);
-        List<TbItem> tbItemList = itemMapper.select(tbItem);
+        List<TbItem> tbItemList = this.itemMapper.select(tbItem);
         goods.setGoods(tbGoods);
         goods.setGoodsDesc(tbGoodsDesc);
         goods.setItemList(tbItemList);
@@ -115,15 +124,15 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
         tbGoods.setAuditStatus("0");
         //是否删除 初始状态为否
         tbGoods.setIsDelete(false);
-        goodsMapper.insert(tbGoods);
+        this.goodsMapper.insert(tbGoods);
 
         //2获取goodsdesc
         TbGoodsDesc goodsDesc = goods.getGoodsDesc();
         //设置描述表的主键
         goodsDesc.setGoodsId(tbGoods.getId());
-        goodsDescMapper.insert(goodsDesc);
+        this.goodsDescMapper.insert(goodsDesc);
 
-        saveItems(goods, tbGoods, goodsDesc);
+        this.saveItems(goods, tbGoods, goodsDesc);
 
 
     }
@@ -152,7 +161,7 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
 
                 //设置图片从goodsDesc中获取
                 String itemImages = goods.getGoodsDesc().getItemImages();
-                //[{"color":"灰色","url":"http://192.168.25.129/group1/M00/00/00/wKgZhV0UIr6AEGQjAAAbnsHIuy8707.jpg"}]
+                //[{"color":"灰色","url":"http://192.168.146.130/group1/M00/00/00/wKgZhV0UIr6AEGQjAAAbnsHIuy8707.jpg"}]
                 //转为对象 取出其中的url
                 List<Map> maps = JSON.parseArray(itemImages, Map.class);
                 String url = maps.get(0).get("url").toString();//图片的地址
@@ -160,7 +169,7 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
 
                 //设置分类
                 //获取子类目的分类
-                TbItemCat tbItemCat = itemCatMapper.selectByPrimaryKey(tbGoods.getCategory3Id());
+                TbItemCat tbItemCat = this.itemCatMapper.selectByPrimaryKey(tbGoods.getCategory3Id());
                 //设置分类的id
                 tbItem.setCategoryid(tbItemCat.getId());
                 //设置分类的名称
@@ -176,15 +185,15 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
 
 
                 //设置商家  //通过商家id查询商家店铺名
-                TbSeller tbSeller = sellerMapper.selectByPrimaryKey(tbGoods.getSellerId());
+                TbSeller tbSeller = this.sellerMapper.selectByPrimaryKey(tbGoods.getSellerId());
                 tbItem.setSellerId(tbSeller.getSellerId());
                 tbItem.setSeller(tbSeller.getNickName()); //店铺名
 
                 //设置品牌名称
-                TbBrand tbBrand = brandMapper.selectByPrimaryKey(tbGoods.getBrandId());
+                TbBrand tbBrand = this.brandMapper.selectByPrimaryKey(tbGoods.getBrandId());
                 tbItem.setBrand(tbBrand.getName());
 
-                itemMapper.insert(tbItem);
+                this.itemMapper.insert(tbItem);
             }
         }else {
             //如果不启用规则
@@ -199,7 +208,7 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
             tbItem.setSpec("{}");//没有选用设置为空
 
 //设置图片从goodsDesc中获取
-            //[{"color":"黑色","url":"http://192.168.25.129/group1/M00/00/03/wKgZhVq7N-qAEDgSAAJfMemqtP8461.jpg"}]
+            //[{"color":"黑色","url":"http://192.168.146.130/group1/M00/00/03/wKgZhVq7N-qAEDgSAAJfMemqtP8461.jpg"}]
             String itemImages = goodsDesc.getItemImages();//
 
             List<Map> maps = JSON.parseArray(itemImages, Map.class);
@@ -208,7 +217,7 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
             tbItem.setImage(url);
 
             //设置分类
-            TbItemCat tbItemCat = itemCatMapper.selectByPrimaryKey(tbGoods.getCategory3Id());
+            TbItemCat tbItemCat = this.itemCatMapper.selectByPrimaryKey(tbGoods.getCategory3Id());
             tbItem.setCategoryid(tbItemCat.getId());
             tbItem.setCategory(tbItemCat.getName());
 
@@ -220,26 +229,26 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
             tbItem.setGoodsId(tbGoods.getId());
 
             //设置商家
-            TbSeller tbSeller = sellerMapper.selectByPrimaryKey(tbGoods.getSellerId());
+            TbSeller tbSeller = this.sellerMapper.selectByPrimaryKey(tbGoods.getSellerId());
             tbItem.setSellerId(tbSeller.getSellerId());
             tbItem.setSeller(tbSeller.getNickName());//店铺名
 
             //设置品牌
-            TbBrand tbBrand = brandMapper.selectByPrimaryKey(tbGoods.getBrandId());
+            TbBrand tbBrand = this.brandMapper.selectByPrimaryKey(tbGoods.getBrandId());
             tbItem.setBrand(tbBrand.getName());
-            itemMapper.insert(tbItem);
+            this.itemMapper.insert(tbItem);
 
 
 
-            itemMapper.insert(tbItem);
+            this.itemMapper.insert(tbItem);
         }
     }
 
     @Override
     public PageInfo<TbGoods> findPage(Integer pageNo, Integer pageSize) {
         PageHelper.startPage(pageNo, pageSize);
-        List<TbGoods> all = goodsMapper.selectAll();
-        PageInfo<TbGoods> info = new PageInfo<TbGoods>(all);
+        List<TbGoods> all = this.goodsMapper.selectAll();
+        PageInfo<TbGoods> info = new PageInfo<>(all);
 
         //序列化再反序列化
         String s = JSON.toJSONString(info);
@@ -288,8 +297,8 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
             }
 
         }
-        List<TbGoods> all = goodsMapper.selectByExample(example);
-        PageInfo<TbGoods> info = new PageInfo<TbGoods>(all);
+        List<TbGoods> all = this.goodsMapper.selectByExample(example);
+        PageInfo<TbGoods> info = new PageInfo<>(all);
         //序列化再反序列化
         String s = JSON.toJSONString(info);
         PageInfo<TbGoods> pageInfo = JSON.parseObject(s, PageInfo.class);
@@ -315,7 +324,7 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
         criteria.andIn("id", Arrays.asList(ids));
         //传入更新的值 和 更改的id
         // update set status=1 where id in (12,3,...)
-        goodsMapper.updateByExampleSelective(tbGoods, example);
+        this.goodsMapper.updateByExampleSelective(tbGoods, example);
 
 
     }
@@ -334,7 +343,7 @@ public class GoodsServiceImpl extends CoreServiceImpl<TbGoods> implements GoodsS
 
         TbGoods tbGoods = new TbGoods();
         tbGoods.setIsDelete(true);
-        goodsMapper.updateByExampleSelective(tbGoods, example);
+        this.goodsMapper.updateByExampleSelective(tbGoods, example);
 
 
 
