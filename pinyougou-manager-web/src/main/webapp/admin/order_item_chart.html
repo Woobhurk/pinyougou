@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../plugins/element-ui/theme-chalk/index.css">
+    <title>销售饼状图</title>
+</head>
+
+<body>
+<div>
+    <el-row>
+        <el-col>
+            <div id="toolPanel">
+                <el-select v-model="selectedCategory1" @change="onChangeCategory1()" placeholder="请选择">
+                    <el-option
+                        v-for="category1 in category1List"
+                        :label="category1.name"
+                        :value="category1.id">
+                    </el-option>
+                </el-select>
+
+                <el-select v-model="selectedCategory2" @change="onChangeCategory2()" placeholder="请选择">
+                    <el-option
+                        v-for="category2 in category2List"
+                        :label="category2.name"
+                        :value="category2.id">
+                    </el-option>
+                </el-select>
+
+                <el-select v-model="selectedCategory3" @change="onChangeCategory3()" placeholder="请选择">
+                    <el-option
+                        v-for="category3 in category3List"
+                        :label="category3.name"
+                        :value="category3.id">
+                    </el-option>
+                </el-select>
+
+                <el-date-picker
+                    v-model="selectedDate"
+                    type="datetimerange"
+                    start-placeholder="开始日期"
+                    range-separator="至"
+                    end-placeholder="结束日期"
+                    @change="onChangeDate()">
+                </el-date-picker>
+
+                <el-button @click="onSearchChart()" type="primary">查找</el-button>
+                <el-button @click="onClearChartParam()" type="warning">清空条件</el-button>
+            </div>
+        </el-col>
+    </el-row>
+
+    <el-divider></el-divider>
+
+    <el-row>
+        <el-col>
+            <div id="chartPanel">
+                <div id="sunburstChart" style="margin: 0 auto; width: 640px; height: 640px;"></div>
+            </div>
+        </el-col>
+    </el-row>
+</div>
+
+<script src="../plugins/vue/vue.js"></script>
+<script src="../plugins/axios/axios.js"></script>
+<script src="../plugins/element-ui/index.js"></script>
+<script src="../plugins/echarts/echarts.js"></script>
+<script src="../plugins/utils/PygUtils.js"></script>
+<script src="../plugins/utils/PygData.js"></script>
+<script src="../plugins/vm/OrderItemChartVm.js"></script>
+</body>
+</html>

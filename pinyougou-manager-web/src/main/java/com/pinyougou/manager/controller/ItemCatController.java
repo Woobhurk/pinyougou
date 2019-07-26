@@ -54,7 +54,7 @@ public class ItemCatController {
         try {
             System.out.println(itemCat.getParentId());
 
-			this.itemCatService.add(itemCat);
+            this.itemCatService.add(itemCat);
 
             return new Result(true, "增加成功");
         } catch (Exception e) {
@@ -72,7 +72,7 @@ public class ItemCatController {
     @RequestMapping("/update")
     public Result update(@RequestBody TbItemCat itemCat) {
         try {
-			this.itemCatService.update(itemCat);
+            this.itemCatService.update(itemCat);
             return new Result(true, "修改成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,7 +100,7 @@ public class ItemCatController {
     @RequestMapping("/delete")
     public Result delete(@RequestBody Long[] ids) {
         try {
-			this.itemCatService.delete(ids);
+            this.itemCatService.delete(ids);
             return new Result(true, "删除成功");
         } catch (Exception e) {
             e.printStackTrace();
