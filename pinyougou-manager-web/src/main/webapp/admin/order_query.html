@@ -13,6 +13,7 @@
             <el-select
                 v-model="selectedCategory1"
                 @change="onChangeCategory1()"
+                size="small"
                 placeholder="请选择">
                 <el-option
                     v-for="category1 in category1List"
@@ -23,6 +24,7 @@
 
             <el-select v-model="selectedCategory2"
                 @change="onChangeCategory2()"
+                size="small"
                 placeholder="请选择">
                 <el-option
                     v-for="category2 in category2List"
@@ -33,6 +35,7 @@
 
             <el-select v-model="selectedCategory3"
                 @change="onChangeCategory3()"
+                size="small"
                 placeholder="请选择">
                 <el-option
                     v-for="category3 in category3List"
@@ -47,18 +50,21 @@
                 start-placeholder="开始日期"
                 range-separator="至"
                 end-placeholder="结束日期"
+                size="small"
                 @change="onChangeDate()">
             </el-date-picker>
 
-            <el-button @click="onSearchOrders()" type="primary">查找</el-button>
-            <el-button @click="onClearParam()" type="warning">清空条件</el-button>
+            <el-button @click="onSearchOrders()" type="primary"
+                size="small">查找</el-button>
+            <el-button @click="onClearParam()" type="warning"
+                size="small">清空条件</el-button>
         </div>
     </el-col>
 </el-row>
 
 <el-row>
     <el-col :span="24">
-        <div id="dataPanel" style="margin-top: 20px;">
+        <div id="dataPanel" style="margin-top: 10px;">
             <el-table
                 :data="orderResultList"
                 stripe border>
@@ -111,7 +117,7 @@
 
 <el-row>
     <el-col :span="24">
-        <div id="summaryPanel" style="margin-top: 20px;">
+        <div id="summaryPanel" style="margin-top: 10px;">
             <el-form :inline="true">
                 <el-form-item>
                     <el-input v-model="totalOrder" :disabled="true" placeholder="">
