@@ -36,12 +36,12 @@
                 </el-select>
 
                 <el-date-picker
-                    v-model="selectedDate"
+                    v-model="selectedTime"
                     type="datetimerange"
                     start-placeholder="开始日期"
                     range-separator="至"
                     end-placeholder="结束日期"
-                    @change="onChangeDate()">
+                    @change="onChangeTime()">
                 </el-date-picker>
 
                 <el-button @click="onSearchChart()" type="primary">查找</el-button>

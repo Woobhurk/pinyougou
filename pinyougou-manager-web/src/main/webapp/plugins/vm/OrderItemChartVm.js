@@ -27,7 +27,7 @@ class OrderItemChartVm {
                 selectedCategory1: null,
                 selectedCategory2: null,
                 selectedCategory3: null,
-                selectedDate: [
+                selectedTime: [
                     new Date(2000, 10, 10, 10, 10),
                     new Date(2019, 10, 11, 10, 10)
                 ],
@@ -47,8 +47,8 @@ class OrderItemChartVm {
                 onChangeCategory3: function () {
                     _this.loadChartData();
                 },
-                onChangeDate: function () {
-                    _this.changeDate();
+                onChangeTime: function () {
+                    _this.changeTime();
                 },
                 onSearchChart: function () {
                     _this.loadChartData();
@@ -120,9 +120,9 @@ class OrderItemChartVm {
         this.loadChartData();
     }
 
-    changeDate() {
-        let startTime = this.toolPanel.selectedDate[0];
-        let endTime = this.toolPanel.selectedDate[1];
+    changeTime() {
+        let startTime = this.toolPanel.selectedTime[0];
+        let endTime = this.toolPanel.selectedTime[1];
 
         this.toolPanel.orderItemChartParam.startTime = startTime;
         this.toolPanel.orderItemChartParam.endTime = endTime;
