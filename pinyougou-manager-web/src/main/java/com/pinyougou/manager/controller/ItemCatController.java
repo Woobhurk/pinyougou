@@ -131,4 +131,22 @@ public class ItemCatController {
 
     }
 
+    /**
+     * 更新商品分类表的status（审核）
+     * @param ids
+     * @param status
+     * @return
+     */
+    @RequestMapping("/updateStatus/{status}")
+    public Result updateStatus(@RequestBody Long[] ids, @PathVariable(value = "status") String status) {
+
+        try {
+            itemCatService.updateStatus(ids,status);
+            return new Result(true, "更新成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "更新失败");
+        }
+    }
+
 }
