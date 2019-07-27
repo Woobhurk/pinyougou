@@ -5,7 +5,7 @@
 
     <!--单机版的配置-->
     <bean class="org.springframework.data.redis.connection.RedisStandaloneConfiguration" id="standaloneConfig">
-        <property name="hostName" value="192.168.146.130"></property>
+        <property name="hostName" value="192.168.25.129"></property>
         <property name="port" value="6379"></property>
     </bean>
     <!--连接工厂 指定创建连接对象 用于连接redis-->

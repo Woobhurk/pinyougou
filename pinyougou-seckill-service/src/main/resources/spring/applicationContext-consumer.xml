@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean class="org.apache.rocketmq.client.consumer.DefaultMQPushConsumer" init-method="start" destroy-method="shutdown">
-        <property name="namesrvAddr" value="192.168.146.130:9876"></property>
+        <property name="namesrvAddr" value="192.168.25.129:9876"></property>
         <property name="consumerGroup" value="consmer_seckill_group"></property>
         <!--广播的模式  可以多个消费者一起消费一个消息 ，也就是说一个消费者可以被多个消费者消费-->
         <property name="messageModel" value="CLUSTERING"></property>
@@ -26,7 +26,7 @@
 
 
     <bean class="org.apache.rocketmq.client.consumer.DefaultMQPushConsumer" id="defaultMQPushConsumerDelay" init-method="start" destroy-method="shutdown">
-        <property name="namesrvAddr" value="192.168.146.130:9876"></property>
+        <property name="namesrvAddr" value="192.168.25.129:9876"></property>
         <property name="consumerGroup" value="consumer_seckill_Delay_group"></property>
         <!--广播的模式  可以多个消费者一起消费一个消息 ，也就是说一个消费者可以被多个消费者消费-->
         <property name="messageModel" value="CLUSTERING"></property>
