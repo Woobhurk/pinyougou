@@ -147,15 +147,29 @@ class OrderQueryVm {
     }
 
     loadOrdersFinished(resultInfo) {
+        let orderResultList = ObjectUtils.cloneObj(resultInfo.data.dataList);
         let totalPrice = 0.0;
 
-        this.dataPanel.orderResultList = resultInfo.data.dataList;
-        this.pagePanel.total = resultInfo.data.total;
+        for (let i = 0; i < orderResultList.length; i++) {
+            orderResultList[i].order.paymentType = (orderResultList[i].order.paymentType === '1')
+                ? '微信付款' : '货到付款';
 
-        for (let orderResult of this.dataPanel.orderResultList) {
-            totalPrice += orderResult.order.payment;
+            switch (orderResultList[i].order.status) {
+            case '1':
+                orderResultList[i].order.status = '未付款';
+                break;
+            case '2':
+                orderResultList[i].order.status = '已付款';
+                break;
+            default:
+                orderResultList[i].order.status = '其他';
+            }
+
+            totalPrice += orderResultList[i].order.payment;
         }
 
+        this.dataPanel.orderResultList = orderResultList;
+        this.pagePanel.total = resultInfo.data.total;
         this.summaryPanel.totalOrder = this.pagePanel.total;
         this.summaryPanel.totalPrice = totalPrice;
     }
