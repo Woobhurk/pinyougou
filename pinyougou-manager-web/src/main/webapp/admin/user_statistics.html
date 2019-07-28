@@ -2,11 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>用户活跃度分析</title>
+    <title>用户人数统计</title>
     <link rel="stylesheet" href="../plugins/element-ui/theme-chalk/index.css">
 </head>
 <body>
 
+<div id="toolPanel" style="margin-top: 10px;">
+    <el-row>
+        <el-col :span="7">
+            <el-date-picker
+                v-model="selectedTime"
+                type="datetimerange"
+                start-placeholder="开始日期"
+                range-separator="至"
+                end-placeholder="结束日期"
+                size="small"
+                @change="onChangeTime()">
+            </el-date-picker>
+        </el-col>
+        <el-col :span="4">
+            <el-select v-model="userStatisticsParam.timeDelta"
+                size="small"
+                placeholder="时间单位">
+                <el-option
+                    v-for="(timeDelta, index) in TIME_DELTAS"
+                    :label="timeDelta"
+                    :value="index">
+                </el-option>
+            </el-select>
+        </el-col>
+        <el-col :span="4">
+            <el-button @click="onSearchUserStatistics()" type="primary"
+                size="small">查找
+            </el-button>
+            <el-button @click="onClearParam()" type="warning"
+                size="small">清空条件
+            </el-button>
+        </el-col>
+    </el-row>
+</div>
+
+<div id="dataPanel" style="margin-top: 10px;">
+    <el-row>
+        <el-col>
+            <div id="userStatisticsChart" style="margin: 0 auto; width: 100%; height: 400px;"></div>
+        </el-col>
+    </el-row>
+</div>
 
 <script src="../plugins/vue/vue.js"></script>
 <script src="../plugins/axios/axios.js"></script>
@@ -14,6 +56,6 @@
 <script src="../plugins/echarts/echarts.js"></script>
 <script src="../plugins/utils/PygUtils.js"></script>
 <script src="../plugins/utils/PygData.js"></script>
-<script src="../plugins/vm/UserActivity.js"></script>
+<script src="../plugins/vm/UserStatistics.js"></script>
 </body>
 </html>

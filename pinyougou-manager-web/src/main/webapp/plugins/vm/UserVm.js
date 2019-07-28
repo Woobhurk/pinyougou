@@ -22,8 +22,8 @@ class UserVm {
                 userParam: {}
             },
             methods: {
-                onChangeDate: function () {
-                    _this.changeDate();
+                onChangeTime: function () {
+                    _this.changeTime();
                 },
                 onSearchUserList: function () {
                     _this.searchUserList();
@@ -83,7 +83,7 @@ class UserVm {
             });
     }
 
-    changeDate() {
+    changeTime() {
         let selectedTime = this.toolPanel.selectedTime;
 
         this.toolPanel.userParam.startTime = selectedTime[0];

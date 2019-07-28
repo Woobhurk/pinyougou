@@ -23,7 +23,7 @@
                 range-separator="至"
                 end-placeholder="结束日期"
                 size="small"
-                @change="onChangeDate()">
+                @change="onChangeTime()">
             </el-date-picker>
         </el-col>
 
@@ -99,7 +99,6 @@
     </el-row>
 
     <el-dialog title="选择解冻时间" :visible.sync="freezeDialogVisible">
-        {{ selectedTime }}
         <span>
         <el-date-picker
             v-model="selectedTime"

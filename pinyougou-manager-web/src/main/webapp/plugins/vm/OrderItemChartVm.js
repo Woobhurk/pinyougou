@@ -6,7 +6,7 @@ class OrderItemChartVm {
     toolPanel;
     chartPanel;
 
-    sunburstChart;
+    orderItemChart;
 
     main() {
         this.initVc();
@@ -68,6 +68,9 @@ class OrderItemChartVm {
 
     initChart() {
         let chartOption = {
+            tooltip: {
+                formatter: '{b} {c}元'
+            },
             series: {
                 type: 'sunburst',
                 radius: 300,
@@ -75,8 +78,8 @@ class OrderItemChartVm {
             }
         };
 
-        this.sunburstChart = echarts.init(document.getElementById('sunburstChart'));
-        this.sunburstChart.setOption(chartOption);
+        this.orderItemChart = echarts.init(document.getElementById('orderItemChart'));
+        this.orderItemChart.setOption(chartOption);
     }
 
     loadCategory1List() {
@@ -145,9 +148,14 @@ class OrderItemChartVm {
     loadChartData() {
         let orderItemChartParam = this.toolPanel.orderItemChartParam;
 
+        this.orderItemChart.showLoading();
         AjaxUtils.post(`${SELLER_GOODS_WEB}/orderItemChart/countOrderItem.shtml`,
             orderItemChartParam, resultInfo => {
-                this.sunburstChart.setOption({
+                this.orderItemChart.hideLoading();
+                this.orderItemChart.setOption({
+                    tooltip: {
+                        formatter: '{b} {c}元'
+                    },
                     series: {
                         type: 'sunburst',
                         radius: 300,
