@@ -54,6 +54,8 @@ class OrderQueryVm {
         this.dataPanel = new Vue({
             el: '#dataPanel',
             data: {
+                ORDER_PAYMENT_TYPE: ['微信付款', '货到付款'],
+                ORDER_STATUS: ['未付款', '已付款', '其他'],
                 orderResultList: []
             },
             methods: {
@@ -150,22 +152,8 @@ class OrderQueryVm {
         let orderResultList = ObjectUtils.cloneObj(resultInfo.data.dataList);
         let totalPrice = 0.0;
 
-        for (let i = 0; i < orderResultList.length; i++) {
-            orderResultList[i].order.paymentType = (orderResultList[i].order.paymentType === '1')
-                ? '微信付款' : '货到付款';
-
-            switch (orderResultList[i].order.status) {
-            case '1':
-                orderResultList[i].order.status = '未付款';
-                break;
-            case '2':
-                orderResultList[i].order.status = '已付款';
-                break;
-            default:
-                orderResultList[i].order.status = '其他';
-            }
-
-            totalPrice += orderResultList[i].order.payment;
+        for (let orderResult of orderResultList) {
+            totalPrice += orderResult.order.payment;
         }
 
         this.dataPanel.orderResultList = orderResultList;

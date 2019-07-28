@@ -97,8 +97,14 @@
                 <el-table-column label="支付金额" prop="order.payment" width="150" sortable>
                 </el-table-column>
                 <el-table-column label="支付方式" prop="order.paymentType" width="150" sortable>
+                    <div slot-scope="scope">
+                        {{ ORDER_PAYMENT_TYPE[orderResultList[scope.$index].order.paymentType - 1] }}
+                    </div>
                 </el-table-column>
-                <el-table-column label="状态" prop="order.status" width="100" sortable>
+                <el-table-column label="状态" width="100" sortable>
+                    <div slot-scope="scope">
+                        {{ ORDER_STATUS[orderResultList[scope.$index].order.status - 1] }}
+                    </div>
                 </el-table-column>
                 <el-table-column label="创建时间" prop="order.createTime" width="200" sortable>
                 </el-table-column>

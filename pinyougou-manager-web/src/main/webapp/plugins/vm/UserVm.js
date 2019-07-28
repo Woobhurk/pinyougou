@@ -37,6 +37,7 @@ class UserVm {
         this.dataPanel = new Vue({
             el: '#dataPanel',
             data: {
+                USER_STATUS: ['正常', '其他'],
                 userList: [],
                 selectedUser: null,
                 selectedTime: new Date(Date.now() + 90 * 24 * 3600 * 1000),

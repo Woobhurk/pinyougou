@@ -72,8 +72,15 @@
                 <el-table-column label="更新时间" prop="updated" width="200" sortable>
                 </el-table-column>
                 <el-table-column label="状态" prop="status" width="100" sortable>
+                    <div slot-scope="scope">
+                        {{ USER_STATUS[userList[scope.$index].status - 1] }}
+                    </div>
                 </el-table-column>
                 <el-table-column label="解冻时间" prop="unfrozen" width="200" sortable>
+                    <div slot-scope="scope">
+                        {{ userList[scope.$index].unfrozen === null ? '未冻结'
+                            : userList[scope.$index].unfrozen }}
+                    </div>
                 </el-table-column>
                 <el-table-column label="操作" fixed="right">
                     <div slot-scope="scope">
