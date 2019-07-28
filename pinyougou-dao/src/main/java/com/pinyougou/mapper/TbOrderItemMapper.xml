@@ -27,4 +27,25 @@
         WHERE i.create_time BETWEEN #{orderItemChartParam.startTime} AND #{orderItemChartParam.endTime}
             AND i.categoryId = #{orderItemChartParam.parentId};
     </select>
+
+    <select id="findByParam" resultMap="BaseResultMap">
+        SELECT oi.*
+        FROM tb_order_item oi
+             JOIN tb_order o ON oi.order_id = o.order_id
+             JOIN tb_item i ON oi.item_id = i.id
+             JOIN tb_item_cat ic ON i.categoryId = ic.id
+        <where>
+            <if test="orderParam.categoryId != null">
+                AND i.categoryId = #{orderParam.categoryId}
+            </if>
+            <if test="orderParam.title != null and orderParam.title != ''">
+                <bind name="orderParam.title" value="'%' + orderParam.title + '%'"/>
+                AND oi.title LIKE #{orderParam.title}
+            </if>
+            <if test="orderParam.status != null and orderParam.status != ''">
+                AND o.status = #{orderParam.status}
+            </if>
+            AND i.create_time BETWEEN #{orderParam.startTime} AND #{orderParam.endTime}
+        </where>
+    </select>
 </mapper>

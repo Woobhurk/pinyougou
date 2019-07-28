@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../plugins/element-ui/theme-chalk/index.css">
+    <title>订单统计</title>
+</head>
+<body>
+
+<el-row>
+    <el-col :span="24">
+        <div id="toolPanel">
+            <el-select
+                v-model="selectedCategory1"
+                @change="onChangeCategory1()"
+                size="small"
+                placeholder="请选择">
+                <el-option
+                    v-for="category1 in category1List"
+                    :label="category1.name"
+                    :value="category1.id">
+                </el-option>
+            </el-select>
+
+            <el-select v-model="selectedCategory2"
+                @change="onChangeCategory2()"
+                size="small"
+                placeholder="请选择">
+                <el-option
+                    v-for="category2 in category2List"
+                    :label="category2.name"
+                    :value="category2.id">
+                </el-option>
+            </el-select>
+
+            <el-select v-model="selectedCategory3"
+                @change="onChangeCategory3()"
+                size="small"
+                placeholder="请选择">
+                <el-option
+                    v-for="category3 in category3List"
+                    :label="category3.name"
+                    :value="category3.id">
+                </el-option>
+            </el-select>
+
+            <el-date-picker
+                v-model="selectedTime"
+                type="datetimerange"
+                start-placeholder="开始日期"
+                range-separator="至"
+                end-placeholder="结束日期"
+                size="small"
+                @change="onChangeDate()">
+            </el-date-picker>
+
+            <el-button @click="onSearchOrders()" type="primary"
+                size="small">查找</el-button>
+            <el-button @click="onClearParam()" type="warning"
+                size="small">清空条件</el-button>
+        </div>
+    </el-col>
+</el-row>
+
+<el-row>
+    <el-col :span="24">
+        <div id="dataPanel" style="margin-top: 10px;">
+            <el-table
+                :data="orderResultList"
+                stripe border>
+                <el-table-column
+                    type="expand">
+                    <el-table
+                        slot-scope="scope"
+                        :data="orderResultList[scope.$index].orderItemList"
+                        height="300"
+                        border show-summary>
+                        <el-table-column label="父订单ID" prop="orderId" width="200" sortable>
+                        </el-table-column>
+                        <el-table-column label="标题" prop="title" width="500" sortable>
+                        </el-table-column>
+                        <el-table-column label="单价" prop="price" width="100" sortable>
+                        </el-table-column>
+                        <el-table-column label="数量" prop="num" width="100" sortable>
+                        </el-table-column>
+                        <el-table-column label="总金额" prop="totalFee" width="150" sortable>
+                        </el-table-column>
+                        <el-table-column label="商家ID" prop="sellerId" width="150" sortable>
+                        </el-table-column>
+                    </el-table>
+                </el-table-column>
+                <el-table-column label="操作" width="150">
+                    <el-button type="primary" size="mini">
+                        详情
+                    </el-button>
+                </el-table-column>
+                <el-table-column label="订单ID" prop="order.orderId" width="200" sortable>
+                </el-table-column>
+                <el-table-column label="支付金额" prop="order.payment" width="150" sortable>
+                </el-table-column>
+                <el-table-column label="支付方式" prop="order.paymentType" width="150" sortable>
+                    <!--{{ orderResultList[scope.$index].order.paymentType === '1' ? '微信付款' : '货到付款' }}-->
+                </el-table-column>
+                <el-table-column label="状态" prop="order.status" width="100" sortable>
+                </el-table-column>
+                <el-table-column label="创建时间" prop="order.createTime" width="200" sortable>
+                </el-table-column>
+                <el-table-column label="更新时间" prop="order.updateTime" width="200" sortable>
+                </el-table-column>
+                <el-table-column label="用户ID" prop="order.userId" width="150" sortable>
+                </el-table-column>
+                <el-table-column label="商家ID" prop="order.sellerId" width="150" sortable>
+                </el-table-column>
+            </el-table>
+        </div>
+    </el-col>
+</el-row>
+
+<el-row>
+    <el-col :span="24">
+        <div id="summaryPanel" style="margin-top: 10px;">
+            <el-form :inline="true">
+                <el-form-item>
+                    <el-input v-model="totalOrder" :disabled="true" placeholder="">
+                        <span slot="prepend">总订单数</span>
+                    </el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-input v-model="totalPrice" :disabled="true" placeholder="">
+                        <span slot="prepend">当前页订单总额</span>
+                    </el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-col>
+</el-row>
+
+<el-row>
+    <el-col :span="24">
+        <div id="pagePanel" style="margin-top: 0;">
+            <el-pagination
+                layout="prev, pager, next, total"
+                :current-page.sync="pageNum"
+                :page-size="pageSize"
+                :total="total"
+                @current-change="onChangePage()"
+                background>
+            </el-pagination>
+        </div>
+    </el-col>
+</el-row>
+
+<script src="../plugins/vue/vue.js"></script>
+<script src="../plugins/axios/axios.js"></script>
+<script src="../plugins/element-ui/index.js"></script>
+<script src="../plugins/echarts/echarts.js"></script>
+<script src="../plugins/utils/PygUtils.js"></script>
+<script src="../plugins/utils/PygData.js"></script>
+<script src="../plugins/vm/OrderQueryVm.js"></script>
+</body>
+</html>

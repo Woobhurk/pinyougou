@@ -33,7 +33,7 @@ public class UploadFileController {
 
             String file_id = fastDFSClient.uploadFile(bytes, extName);
              //拼接url返回给页面
-            String realUrl = "http://192.168.146.130/" + file_id;
+            String realUrl = "http://192.168.25.129/" + file_id;
 
             return new Result(true, realUrl);
 
