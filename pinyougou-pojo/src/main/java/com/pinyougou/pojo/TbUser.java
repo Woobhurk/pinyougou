@@ -1,11 +1,14 @@
 package com.pinyougou.pojo;
 
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Table(name = "tb_user")
 public class TbUser implements Serializable {
@@ -77,6 +80,9 @@ public class TbUser implements Serializable {
      */
     @Column(name = "status")
     private String status;
+
+    @Column(name = "unfrozen")
+    private Date unfrozen;
 
     /**
      * 头像地址
@@ -150,7 +156,7 @@ public class TbUser implements Serializable {
      * @return id
      */
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -166,7 +172,7 @@ public class TbUser implements Serializable {
      * @return username - 用户名
      */
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     /**
@@ -184,7 +190,7 @@ public class TbUser implements Serializable {
      * @return password - 密码，加密存储
      */
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     /**
@@ -202,7 +208,7 @@ public class TbUser implements Serializable {
      * @return phone - 注册手机号
      */
     public String getPhone() {
-        return phone;
+        return this.phone;
     }
 
     /**
@@ -220,7 +226,7 @@ public class TbUser implements Serializable {
      * @return email - 注册邮箱
      */
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     /**
@@ -238,7 +244,7 @@ public class TbUser implements Serializable {
      * @return created - 创建时间
      */
     public Date getCreated() {
-        return created;
+        return this.created;
     }
 
     /**
@@ -254,7 +260,7 @@ public class TbUser implements Serializable {
      * @return updated
      */
     public Date getUpdated() {
-        return updated;
+        return this.updated;
     }
 
     /**
@@ -270,7 +276,7 @@ public class TbUser implements Serializable {
      * @return source_type - 会员来源：1:PC，2：H5，3：Android，4：IOS，5：WeChat
      */
     public String getSourceType() {
-        return sourceType;
+        return this.sourceType;
     }
 
     /**
@@ -288,7 +294,7 @@ public class TbUser implements Serializable {
      * @return nick_name - 昵称
      */
     public String getNickName() {
-        return nickName;
+        return this.nickName;
     }
 
     /**
@@ -306,7 +312,7 @@ public class TbUser implements Serializable {
      * @return name - 真实姓名
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -324,7 +330,7 @@ public class TbUser implements Serializable {
      * @return status - 使用状态（Y正常 N非正常）
      */
     public String getStatus() {
-        return status;
+        return this.status;
     }
 
     /**
@@ -336,13 +342,21 @@ public class TbUser implements Serializable {
         this.status = status;
     }
 
+    public Date getUnfrozen() {
+        return this.unfrozen;
+    }
+
+    public void setUnfrozen(Date unfrozen) {
+        this.unfrozen = unfrozen;
+    }
+
     /**
      * 获取头像地址
      *
      * @return head_pic - 头像地址
      */
     public String getHeadPic() {
-        return headPic;
+        return this.headPic;
     }
 
     /**
@@ -360,7 +374,7 @@ public class TbUser implements Serializable {
      * @return qq - QQ号码
      */
     public String getQq() {
-        return qq;
+        return this.qq;
     }
 
     /**
@@ -378,7 +392,7 @@ public class TbUser implements Serializable {
      * @return account_balance - 账户余额
      */
     public Long getAccountBalance() {
-        return accountBalance;
+        return this.accountBalance;
     }
 
     /**
@@ -396,7 +410,7 @@ public class TbUser implements Serializable {
      * @return is_mobile_check - 手机是否验证 （0否  1是）
      */
     public String getIsMobileCheck() {
-        return isMobileCheck;
+        return this.isMobileCheck;
     }
 
     /**
@@ -414,7 +428,7 @@ public class TbUser implements Serializable {
      * @return is_email_check - 邮箱是否检测（0否  1是）
      */
     public String getIsEmailCheck() {
-        return isEmailCheck;
+        return this.isEmailCheck;
     }
 
     /**
@@ -432,7 +446,7 @@ public class TbUser implements Serializable {
      * @return sex - 性别，1男，2女
      */
     public String getSex() {
-        return sex;
+        return this.sex;
     }
 
     /**
@@ -450,7 +464,7 @@ public class TbUser implements Serializable {
      * @return user_level - 会员等级
      */
     public Integer getUserLevel() {
-        return userLevel;
+        return this.userLevel;
     }
 
     /**
@@ -468,7 +482,7 @@ public class TbUser implements Serializable {
      * @return points - 积分
      */
     public Integer getPoints() {
-        return points;
+        return this.points;
     }
 
     /**
@@ -486,7 +500,7 @@ public class TbUser implements Serializable {
      * @return experience_value - 经验值
      */
     public Integer getExperienceValue() {
-        return experienceValue;
+        return this.experienceValue;
     }
 
     /**
@@ -504,7 +518,7 @@ public class TbUser implements Serializable {
      * @return birthday - 生日
      */
     public Date getBirthday() {
-        return birthday;
+        return this.birthday;
     }
 
     /**
@@ -522,7 +536,7 @@ public class TbUser implements Serializable {
      * @return last_login_time - 最后登录时间
      */
     public Date getLastLoginTime() {
-        return lastLoginTime;
+        return this.lastLoginTime;
     }
 
     /**
@@ -532,5 +546,34 @@ public class TbUser implements Serializable {
      */
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    @Override
+    public String toString() {
+        return "TbUser{" +
+            "id=" + this.id +
+            ", username='" + this.username + '\'' +
+            ", password='" + this.password + '\'' +
+            ", phone='" + this.phone + '\'' +
+            ", email='" + this.email + '\'' +
+            ", created=" + this.created +
+            ", updated=" + this.updated +
+            ", sourceType='" + this.sourceType + '\'' +
+            ", nickName='" + this.nickName + '\'' +
+            ", name='" + this.name + '\'' +
+            ", status='" + this.status + '\'' +
+            ", unfrozen=" + this.unfrozen +
+            ", headPic='" + this.headPic + '\'' +
+            ", qq='" + this.qq + '\'' +
+            ", accountBalance=" + this.accountBalance +
+            ", isMobileCheck='" + this.isMobileCheck + '\'' +
+            ", isEmailCheck='" + this.isEmailCheck + '\'' +
+            ", sex='" + this.sex + '\'' +
+            ", userLevel=" + this.userLevel +
+            ", points=" + this.points +
+            ", experienceValue=" + this.experienceValue +
+            ", birthday=" + this.birthday +
+            ", lastLoginTime=" + this.lastLoginTime +
+            '}';
     }
 }

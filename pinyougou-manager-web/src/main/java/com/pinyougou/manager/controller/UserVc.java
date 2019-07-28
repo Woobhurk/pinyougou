@@ -1,30 +1,38 @@
 package com.pinyougou.manager.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.pinyougou.sellergoods.service.OrderService;
-import entity.OrderParam;
+import com.pinyougou.pojo.TbUser;
+import com.pinyougou.sellergoods.service.UserService;
 import entity.ResultInfo;
-import org.springframework.security.core.context.SecurityContextHolder;
+import entity.UserParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/order")
-public class OrderVc {
+@RequestMapping("/user")
+public class UserVc {
     @Reference
-    private OrderService orderService;
+    private UserService userService;
 
     @RequestMapping("/findByPageParam/{pageNum}/{pageSize}")
     public ResultInfo findByPageParam(@PathVariable("pageNum") Integer pageNum,
-        @PathVariable("pageSize") Integer pageSize, @RequestBody OrderParam orderParam) {
+        @PathVariable("pageSize") Integer pageSize, @RequestBody UserParam userParam) {
         ResultInfo resultInfo = new ResultInfo();
 
-        System.err.println(SecurityContextHolder.getContext().getAuthentication().getName());
+        resultInfo.setSuccess(true);
+        resultInfo.setData(this.userService.findByPageParam(pageNum, pageSize, userParam));
+
+        return resultInfo;
+    }
+
+    @RequestMapping("/update")
+    public ResultInfo update(@RequestBody TbUser user) {
+        ResultInfo resultInfo = new ResultInfo();
 
         resultInfo.setSuccess(true);
-        resultInfo.setData(this.orderService.findByPageParam(pageNum, pageSize, orderParam));
+        resultInfo.setData(this.userService.updateByPrimaryKey(user));
 
         return resultInfo;
     }

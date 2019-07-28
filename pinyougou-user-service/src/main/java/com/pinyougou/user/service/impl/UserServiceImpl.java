@@ -47,7 +47,6 @@ public class UserServiceImpl extends CoreServiceImpl<TbUser> implements UserServ
         this.userMapper = userMapper;
     }
 
-
     @Override
     public void createSmsCode(String phone) {
         try {

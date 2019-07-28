@@ -8,9 +8,9 @@
 
 <body>
 
-<el-row>
-    <el-col>
-        <div id="toolPanel">
+<div id="toolPanel">
+    <el-row>
+        <el-col>
             <el-select
                 v-model="selectedCategory1"
                 @change="onChangeCategory1()"
@@ -63,17 +63,17 @@
             <el-button @click="onClearChartParam()" type="warning"
                 size="small">清空条件
             </el-button>
-        </div>
-    </el-col>
-</el-row>
+        </el-col>
+    </el-row>
+</div>
 
-<el-row>
-    <el-col>
-        <div id="chartPanel" style="margin-top: 10px;">
+<div id="chartPanel" style="margin-top: 10px;">
+    <el-row>
+        <el-col>
             <div id="sunburstChart" style="margin: 0 auto; width: 640px; height: 640px;"></div>
-        </div>
-    </el-col>
-</el-row>
+        </el-col>
+    </el-row>
+</div>
 
 <script src="../plugins/vue/vue.js"></script>
 <script src="../plugins/axios/axios.js"></script>
