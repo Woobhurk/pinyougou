@@ -25,7 +25,7 @@ class UserStatistics {
                 userStatisticsParam: {
                     startTime: new Date(0),
                     endTime: new Date(),
-                    timeDelta: 0
+                    timeDelta: 2
                 }
             },
             methods: {
