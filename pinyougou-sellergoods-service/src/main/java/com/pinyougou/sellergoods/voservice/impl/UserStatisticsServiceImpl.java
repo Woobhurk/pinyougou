@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.alibaba.dubbo.config.annotation.Service;
-import com.pinyougou.common.constant.UserStatisticsConfig;
+import com.pinyougou.common.constant.TimeConfig;
 import com.pinyougou.mapper.TbUserMapper;
 import com.pinyougou.pojo.TbUser;
 import com.pinyougou.sellergoods.voservice.UserStatisticsService;
@@ -30,7 +30,7 @@ public class UserStatisticsServiceImpl implements UserStatisticsService {
         UserStatisticsResult userStatisticsResult;
         Date startTime;
         Date endTime;
-        Integer timeDelta;
+        Integer timeUnit;
 
         if (userStatisticsParam.getStartTime() == null) {
             startTime = new Date(0);
@@ -44,18 +44,18 @@ public class UserStatisticsServiceImpl implements UserStatisticsService {
             endTime = userStatisticsParam.getEndTime();
         }
 
-        if (userStatisticsParam.getTimeDelta() < UserStatisticsConfig.TIME_DELTA_HOUR
-            || userStatisticsParam.getTimeDelta() > UserStatisticsConfig.TIME_DELTA_MONTH) {
-            timeDelta = UserStatisticsConfig.TIME_DELTA_HOUR;
+        if (userStatisticsParam.getTimeUnit() < TimeConfig.UNIT_HOUR
+            || userStatisticsParam.getTimeUnit() > TimeConfig.UNIT_MONTH) {
+            timeUnit = TimeConfig.UNIT_HOUR;
         } else {
-            timeDelta = userStatisticsParam.getTimeDelta();
+            timeUnit = userStatisticsParam.getTimeUnit();
         }
 
         criteria.andGreaterThanOrEqualTo("created", startTime);
         criteria.andLessThanOrEqualTo("created", endTime);
         savedUserList = this.userMapper.selectByExample(example);
 
-        userStatisticsMap = this.buildUserStatisticsMap(savedUserList, timeDelta);
+        userStatisticsMap = this.buildUserStatisticsMap(savedUserList, timeUnit);
         userStatisticsResult = this.saveUserStatisticsResult(userStatisticsMap);
 
         return userStatisticsResult;
@@ -63,20 +63,20 @@ public class UserStatisticsServiceImpl implements UserStatisticsService {
 
     /*****************************************************************************/
     private Map<String, Integer> buildUserStatisticsMap(List<TbUser> savedUserList,
-        Integer timeDelta) {
+        Integer timeUnit) {
         Map<String, Integer> userStatisticsMap = new HashMap<>();
         TbUser[] extremeCreatedUser = this.findExtremeCreatedUser(savedUserList);
-        long earliestMilliseconds = this.findExtremeCreatedTime(extremeCreatedUser, timeDelta)[0];
-        long latestMilliseconds = this.findExtremeCreatedTime(extremeCreatedUser, timeDelta)[1];
+        long earliestMilliseconds = this.findExtremeCreatedTime(extremeCreatedUser, timeUnit)[0];
+        long latestMilliseconds = this.findExtremeCreatedTime(extremeCreatedUser, timeUnit)[1];
         SimpleDateFormat sdf;
 
-        sdf = new SimpleDateFormat(UserStatisticsConfig.TIME_FORMATS[timeDelta]);
+        sdf = new SimpleDateFormat(TimeConfig.FORMATS[timeUnit]);
 
         // 此方法是用户优先，只存储用户注册的时间段数据
         //for (TbUser user : savedUserList) {
         //    long createdMilliseconds = user.getCreated().getTime()
-        //        / UserStatisticsConfig.TIME_DELTAS[timeDelta]
-        //        * UserStatisticsConfig.TIME_DELTAS[timeDelta];
+        //        / TimeConfig.VALUES[timeUnit]
+        //        * TimeConfig.VALUES[timeUnit];
         //    String createdTimeStr = sdf.format(new Date(createdMilliseconds));
         //
         //    if (userStatisticsMap.containsKey(createdTimeStr)) {
@@ -88,7 +88,7 @@ public class UserStatisticsServiceImpl implements UserStatisticsService {
 
         // 此方法是时间段优先，不管某时间段是否有用户注册都会存储数据
         for (long current = earliestMilliseconds; current < latestMilliseconds;
-             current += UserStatisticsConfig.TIME_DELTAS[timeDelta]) {
+             current += TimeConfig.VALUES[timeUnit]) {
             String createdTimeStr = sdf.format(new Date(current));
 
             userStatisticsMap.put(createdTimeStr, 0);
@@ -96,8 +96,8 @@ public class UserStatisticsServiceImpl implements UserStatisticsService {
 
         for (TbUser user : savedUserList) {
             long createdMilliseconds = user.getCreated().getTime()
-                / UserStatisticsConfig.TIME_DELTAS[timeDelta]
-                * UserStatisticsConfig.TIME_DELTAS[timeDelta];
+                / TimeConfig.VALUES[timeUnit]
+                * TimeConfig.VALUES[timeUnit];
             String createdTimeStr = sdf.format(new Date(createdMilliseconds));
 
             userStatisticsMap.put(createdTimeStr, userStatisticsMap.get(createdTimeStr) + 1);
@@ -111,18 +111,12 @@ public class UserStatisticsServiceImpl implements UserStatisticsService {
         List<String> timeStrList = new ArrayList<>(userStatisticsMap.keySet());
 
         timeStrList.sort(String::compareTo);
-        userStatisticsResult.setHorizontalDataList(new ArrayList<>());
+        userStatisticsResult.setHorizontalDataList(new ArrayList<>(timeStrList));
         userStatisticsResult.setVerticalDataList(new ArrayList<>());
 
         for (String timeStr : timeStrList) {
-            userStatisticsResult.getHorizontalDataList().add(timeStr);
             userStatisticsResult.getVerticalDataList().add(userStatisticsMap.get(timeStr));
         }
-
-        //for (Map.Entry<String, Integer> entry : userStatisticsMap.entrySet()) {
-        //    userStatisticsResult.getHorizontalDataList().add(entry.getKey());
-        //    userStatisticsResult.getVerticalDataList().add(entry.getValue());
-        //}
 
         return userStatisticsResult;
     }
@@ -146,14 +140,14 @@ public class UserStatisticsServiceImpl implements UserStatisticsService {
         return new TbUser[]{earliestUser, latestUser};
     }
 
-    private long[] findExtremeCreatedTime(TbUser[] extremeCreatedUser, int timeDelta) {
+    private long[] findExtremeCreatedTime(TbUser[] extremeCreatedUser, int timeUnit) {
         long earliestMilliseconds = extremeCreatedUser[0].getCreated().getTime()
-            / UserStatisticsConfig.TIME_DELTAS[timeDelta]
-            * UserStatisticsConfig.TIME_DELTAS[timeDelta];
+            / TimeConfig.VALUES[timeUnit]
+            * TimeConfig.VALUES[timeUnit];
         long latestMilliseconds = extremeCreatedUser[1].getCreated().getTime()
-            / UserStatisticsConfig.TIME_DELTAS[timeDelta]
-            * UserStatisticsConfig.TIME_DELTAS[timeDelta]
-            + UserStatisticsConfig.TIME_DELTAS[timeDelta];
+            / TimeConfig.VALUES[timeUnit]
+            * TimeConfig.VALUES[timeUnit]
+            + TimeConfig.VALUES[timeUnit];
 
         return new long[]{earliestMilliseconds, latestMilliseconds};
     }

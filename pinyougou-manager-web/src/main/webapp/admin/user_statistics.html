@@ -21,13 +21,13 @@
             </el-date-picker>
         </el-col>
         <el-col :span="4">
-            <el-select v-model="userStatisticsParam.timeDelta"
+            <el-select v-model="userStatisticsParam.timeUnit"
                 size="small"
                 placeholder="时间单位">
                 <el-option
-                    v-for="(timeDelta, index) in TIME_DELTAS"
-                    :label="timeDelta"
-                    :value="index">
+                    v-for="(timeUnit, index) in TIME_UNIT"
+                    :label="timeUnit"
+                    :value="index + 1">
                 </el-option>
             </el-select>
         </el-col>

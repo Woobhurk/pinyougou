@@ -6,7 +6,7 @@ import java.util.Date;
 public class UserStatisticsParam implements Serializable {
     private Date startTime;
     private Date endTime;
-    private Integer timeDelta;
+    private Integer timeUnit;
 
     public Date getStartTime() {
         return this.startTime;
@@ -24,12 +24,12 @@ public class UserStatisticsParam implements Serializable {
         this.endTime = endTime;
     }
 
-    public Integer getTimeDelta() {
-        return this.timeDelta;
+    public Integer getTimeUnit() {
+        return this.timeUnit;
     }
 
-    public void setTimeDelta(Integer timeDelta) {
-        this.timeDelta = timeDelta;
+    public void setTimeUnit(Integer timeUnit) {
+        this.timeUnit = timeUnit;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class UserStatisticsParam implements Serializable {
         return "UserStatisticsParam{" +
             "startTime=" + this.startTime +
             ", endTime=" + this.endTime +
-            ", timeDelta=" + this.timeDelta +
+            ", timeUnit=" + this.timeUnit +
             '}';
     }
 }

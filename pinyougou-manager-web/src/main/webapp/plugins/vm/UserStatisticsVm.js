@@ -20,12 +20,12 @@ class UserStatisticsVm {
         this.toolPanel = new Vue({
             el: '#toolPanel',
             data: {
-                TIME_DELTAS: ['按小时', '按天', '按月'],
+                TIME_UNIT: ['按小时', '按天', '按月'],
                 selectedTime: [new Date(0), new Date()],
                 userStatisticsParam: {
                     startTime: new Date(0),
                     endTime: new Date(),
-                    timeDelta: 2
+                    timeUnit: 3
                 }
             },
             methods: {
@@ -137,7 +137,7 @@ class UserStatisticsVm {
         this.toolPanel.userStatisticsParam = {
             startTime: new Date(0),
             endTime: new Date(),
-            timeDelta: 2
+            timeUnit: 3
         }
     }
 }
