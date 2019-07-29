@@ -92,8 +92,12 @@ class UserActivityVm {
                 },
                 formatter: '{b} {c}'
             },
-            xAxis: {},
-            yAxis: {},
+            xAxis: {
+                type: 'time'
+            },
+            yAxis: {
+                max: 24
+            },
             dataZoom: [
                 {
                     type: 'slider',
@@ -247,20 +251,18 @@ class UserActivityVm {
     }
 
     convertUserActivityTimeUnit(userActivityTimeResult) {
+        let userActivityParam = this.toolPanel.userActivityParam;
         let newUserActivityResult = [];
 
         for (let dataPair of userActivityTimeResult) {
-            let date = dataPair[0];
-            let hour = dataPair[1];
+            let dateMilliseconds = dataPair[0];
+            let hourMilliseconds = dataPair[1];
             let newDataPair = [];
 
-            newDataPair[0] = date / 24 / 3600 / 1000;
-            newDataPair[1] = hour / 3600 / 1000;
-
-            if (newDataPair[1] > 24) {
-                newDataPair[1] = 24;
-            }
-
+            //newDataPair[0] = (dateMilliseconds - userActivityParam.startTime.valueOf())
+            //    / 24 / 3600 / 1000;
+            newDataPair[0] = dateMilliseconds;
+            newDataPair[1] = hourMilliseconds / 3600 / 1000;
             newUserActivityResult.push(newDataPair);
         }
 

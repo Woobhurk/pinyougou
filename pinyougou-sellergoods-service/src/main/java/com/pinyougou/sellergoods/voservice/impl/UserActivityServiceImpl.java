@@ -134,8 +134,7 @@ public class UserActivityServiceImpl implements UserActivityService {
         for (Map.Entry<Long, Map<String, Integer>> allUserActivityEntry
             : allUserActivityMap.entrySet()) {
             Map<String, Integer> perUserActivityMap = allUserActivityEntry.getValue();
-            long dateMilliseconds = allUserActivityEntry.getKey()
-                / timeUnitValue * timeUnitValue;
+            long dateMilliseconds = allUserActivityEntry.getKey() / timeUnitValue * timeUnitValue;
             long dayMilliseconds = allUserActivityEntry.getKey() % TimeConfig.MSECONDS_PER_DAY;
 
             for (Map.Entry<String, Integer> entry : perUserActivityMap.entrySet()) {
