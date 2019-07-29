@@ -15,6 +15,9 @@
     <!--redisTemplate 操作redis的核心类-->
      <bean class="org.springframework.data.redis.core.RedisTemplate" id="redisTemplate">
          <property name="connectionFactory" ref="connectionFactory"></property>
+         <property name="defaultSerializer">
+             <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
+         </property>
      </bean>
 
 

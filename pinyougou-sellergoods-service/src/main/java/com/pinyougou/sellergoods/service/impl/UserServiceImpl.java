@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
 @Service
+@org.springframework.stereotype.Service
 public class UserServiceImpl extends CoreServiceImpl<TbUser> implements UserService {
     private TbUserMapper userMapper;
 

@@ -15,7 +15,10 @@
     </bean>
 
     <bean class="org.springframework.data.redis.core.RedisTemplate" id="redisTemplate">
-        <property name="connectionFactory" ref="connectionFactory"></property>
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="defaultSerializer">
+            <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
+        </property>
     </bean>
 
 </beans>

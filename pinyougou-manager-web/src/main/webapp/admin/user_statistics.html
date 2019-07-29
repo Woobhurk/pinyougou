@@ -9,7 +9,7 @@
 
 <div id="toolPanel" style="margin-top: 10px;">
     <el-row>
-        <el-col :span="7">
+        <el-col :span="8">
             <el-date-picker
                 v-model="selectedTime"
                 type="datetimerange"
@@ -45,7 +45,7 @@
 <div id="dataPanel" style="margin-top: 10px;">
     <el-row>
         <el-col>
-            <div id="userStatisticsChart" style="margin: 0 auto; width: 100%; height: 400px;"></div>
+            <div id="userStatisticsChart" style="margin: 0 auto; width: 100%; height: 600px;"></div>
         </el-col>
     </el-row>
 </div>
@@ -56,6 +56,6 @@
 <script src="../plugins/echarts/echarts.js"></script>
 <script src="../plugins/utils/PygUtils.js"></script>
 <script src="../plugins/utils/PygData.js"></script>
-<script src="../plugins/vm/UserStatistics.js"></script>
+<script src="../plugins/vm/UserStatisticsVm.js"></script>
 </body>
 </html>

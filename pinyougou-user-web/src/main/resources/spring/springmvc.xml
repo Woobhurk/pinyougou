@@ -54,6 +54,22 @@
             <mvc:mapping path="/content/**"/>
             <bean class="com.pinyougou.user.interceptor.UserLoginInterceptor"/>
         </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/user/**"/>
+            <mvc:mapping path="/login/**"/>
+            <mvc:mapping path="/person/**"/>
+            <mvc:mapping path="/address/**"/>
+            <mvc:mapping path="/cart/**"/>
+            <mvc:mapping path="/order/**"/>
+            <mvc:mapping path="/pay/**"/>
+            <mvc:mapping path="/page/**"/>
+            <mvc:mapping path="/seckillGoods/**"/>
+            <mvc:mapping path="/seckillOrder/**"/>
+            <mvc:mapping path="/itemSearch/**"/>
+            <mvc:mapping path="/contentCategory/**"/>
+            <mvc:mapping path="/content/**"/>
+            <bean class="com.pinyougou.user.interceptor.UserActivityInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 
     <!--配置dubbo的配置项 (消费者端)-->

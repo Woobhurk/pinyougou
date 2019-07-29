@@ -8,9 +8,9 @@ public class UserStatisticsConfig {
     public static final int TIME_DELTA_MONTH = 2;
 
     public static final long[] TIME_DELTAS = {
-        3600 * 1000L,
-        24 * 2600 * 1000L,
-        30 * 24 * 3600 * 1000L
+        TimeConfig.MSECONDS_PER_HOUR,
+        TimeConfig.MSECONDS_PER_DAY,
+        TimeConfig.MSECONDS_PER_MONTH
     };
     public static final String[] TIME_FORMATS = {
         "yyyy-MM-dd HH时",
