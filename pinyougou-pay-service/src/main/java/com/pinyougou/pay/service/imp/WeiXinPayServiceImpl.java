@@ -34,7 +34,7 @@ public class WeiXinPayServiceImpl implements WeiXinPayService {
         param.put("body", "品优购");//商品描述
         param.put("out_trade_no", out_trade_no);//商户订单号
         param.put("total_fee",total_fee);//总金额（分）
-        param.put("spbill_create_ip", "192.168.25.129");//IP
+        param.put("spbill_create_ip", "192.168.146.130");//IP
         param.put("notify_url", this.notifyurl);//异步通知结果的回调地址(随便写)
         param.put("trade_type", "NATIVE");//交易类型扫码支付
 

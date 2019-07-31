@@ -90,7 +90,14 @@ class UserActivityVm {
                 axisPointer: {
                     type: 'cross'
                 },
-                formatter: '{b} {c}'
+                //formatter: '{b} {c}'
+                formatter: (params) => {
+                    //return JSON.stringify(params);
+                    //return echarts.format.formatTime('yyyy-MM-dd', params[0].value);
+                    let date = new Date(params[0].data[0]);
+                    let dateStr = date.toISOString().substr(0, 10);
+                    return `${dateStr}`;
+                }
             },
             xAxis: {
                 type: 'time'
@@ -156,7 +163,14 @@ class UserActivityVm {
                 axisPointer: {
                     type: 'cross'
                 },
-                formatter: '{b} {c}人'
+                //formatter: '{b} 在线人数{c}人'
+                formatter: (params) => {
+                    let date = new Date(params[0].axisValue);
+                    let count = params[0].data;
+                    let dateStr = date.toISOString().substr(0, 10);
+
+                    return `${dateStr}<br>在线人数：${count}人`;
+                }
             },
             xAxis: {
                 type: 'category',

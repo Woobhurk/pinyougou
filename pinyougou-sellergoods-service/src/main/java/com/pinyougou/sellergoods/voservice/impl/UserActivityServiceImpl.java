@@ -111,13 +111,18 @@ public class UserActivityServiceImpl implements UserActivityService {
             UserActivityResult userActivityResult = new UserActivityResult();
             String username = entry.getKey();
             TbUser savedUser;
+            int activityRate;
 
             userParam.setUsername(username);
             savedUser = this.userMapper.select(userParam).get(0);
+            activityRate = (int) (savedUser.getLastLoginTime().getTime()
+                % TimeConfig.MSECONDS_PER_YEAR / TimeConfig.MSECONDS_PER_HOUR
+                + entry.getValue());
+
             userActivityResult.setUsername(username);
             userActivityResult.setPhone(savedUser.getPhone());
             userActivityResult.setLastLoginTime(savedUser.getLastLoginTime());
-            userActivityResult.setActivityRate(entry.getValue());
+            userActivityResult.setActivityRate(activityRate);
             userActivityResultList.add(userActivityResult);
         }
 
@@ -180,7 +185,8 @@ public class UserActivityServiceImpl implements UserActivityService {
             }
 
             if (userActivityCountMap.containsKey(timeStr)) {
-                userActivityCountMap.replace(timeStr, userActivityCountMap.get(timeStr) + userCount);
+                userActivityCountMap
+                    .replace(timeStr, userActivityCountMap.get(timeStr) + userCount);
             } else {
                 userActivityCountMap.put(timeStr, userCount);
             }
@@ -231,8 +237,8 @@ public class UserActivityServiceImpl implements UserActivityService {
             .filter(entry ->
                 entry.getKey() >= startTimeMilliseconds && entry.getKey() <= endTimeMilliseconds)
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            //.forEach(entry ->
-            //    filteredAllUserActivityMap.put(entry.getKey(), entry.getValue()));
+        //.forEach(entry ->
+        //    filteredAllUserActivityMap.put(entry.getKey(), entry.getValue()));
 
         return filteredAllUserActivityMap;
     }
